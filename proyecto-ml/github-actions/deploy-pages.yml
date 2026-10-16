@@ -1,0 +1,66 @@
+# Plantilla: copia este archivo a .github/workflows/deploy-pages.yml en TU repositorio.
+# (Dentro de esta carpeta no se ejecuta: GitHub solo lee .github/workflows/ en la raíz).
+#
+# Qué hace en cada push a main:
+#   1. Instala Python y las dependencias.
+#   2. Entrena el modelo y pasa los tests (si fallan, no se publica nada).
+#   3. Publica index.html + model.json en GitHub Pages.
+#
+# Antes del primer uso: Settings → Pages → Build and deployment → Source: "GitHub Actions".
+
+name: Entrenar y publicar en GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Entrenar el modelo
+        run: python train.py
+
+      - name: Comprobar el modelo
+        run: python -m pytest -q
+
+      - name: Preparar la web
+        run: |
+          mkdir _site
+          cp index.html model.json _site/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

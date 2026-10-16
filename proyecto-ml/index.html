@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reconocedor de Dígitos</title>
+<meta name="description" content="Dibuja un número del 0 al 9 y una red neuronal entrenada con scikit-learn lo reconoce en tu navegador.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+  /* Layout: una tarjeta centrada con lienzo a la izquierda y resultados a la derecha. */
+  :root {
+    --bg: #f3f5fb; --surface: #ffffff; --ink: #141b2d; --muted: #5b6478;
+    --line: #dde2ee; --accent: #2f4bdb; --accent-soft: #e4e9ff; --amber: #b7790b;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0e1220; --surface: #161b2e; --ink: #e6e9f2; --muted: #9aa3b8;
+      --line: #2a3150; --accent: #8da2ff; --accent-soft: #232c52; --amber: #f2b84b; color-scheme: dark; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--body);
+    padding-block: 32px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  main { max-width: 860px; margin: 0 auto; display: grid; gap: 24px; }
+  h1 { font: 800 clamp(2rem, 6vw, 3rem)/1.05 var(--display); margin: 0; text-wrap: balance; }
+  .lead { color: var(--muted); margin: 8px 0 0; max-width: 60ch; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 24px;
+    display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 28px; align-items: start; }
+  @media (max-width: 640px) { .card { grid-template-columns: minmax(0, 1fr); } }
+  canvas#pad { width: 100%; max-width: 300px; aspect-ratio: 1; border-radius: 10px; background: #0b0f1c;
+    touch-action: none; cursor: crosshair; display: block; }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+  button { font: 500 15px var(--body); border-radius: 8px; padding: 9px 16px; border: 1px solid var(--line);
+    background: var(--surface); color: var(--ink); cursor: pointer; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+  button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .guess { display: flex; align-items: baseline; gap: 16px; }
+  .guess b { font: 800 5rem/1 var(--display); color: var(--accent); min-width: 1ch; }
+  .guess span { color: var(--muted); }
+  .bars { display: grid; gap: 6px; margin-top: 12px; font: 13px var(--mono); }
+  .bar { display: grid; grid-template-columns: 1.2ch 1fr 5ch; gap: 10px; align-items: center; }
+  .bar i { display: block; height: 10px; border-radius: 5px; background: var(--accent-soft); overflow: hidden; }
+  .bar i::after { content: ""; display: block; height: 100%; width: var(--p, 0%); background: var(--accent); transition: width .2s; }
+  .bar.top { font-weight: 600; }
+  .seen { display: flex; gap: 16px; align-items: center; margin-top: 20px; }
+  canvas#mini { width: 96px; height: 96px; image-rendering: pixelated; border: 1px solid var(--line); border-radius: 6px; }
+  .seen p { margin: 0; color: var(--muted); font-size: 14px; }
+  footer { color: var(--muted); font-size: 14px; }
+  code { font-family: var(--mono); font-size: .9em; }
+  @media (prefers-reduced-motion: reduce) { .bar i::after { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Reconocedor de dígitos</h1>
+    <p class="lead">Dibuja un número del 0 al 9. Una red neuronal entrenada en Python con scikit-learn lo reconoce aquí mismo, en tu navegador, sin servidor.</p>
+  </header>
+
+  <section class="card" aria-label="Demo">
+    <div>
+      <canvas id="pad" width="280" height="280" aria-label="Lienzo para dibujar un dígito"></canvas>
+      <div class="row">
+        <button class="primary" id="clear" type="button">Borrar</button>
+        <button id="sample" type="button">Dibujar un ejemplo</button>
+      </div>
+    </div>
+    <div>
+      <div class="guess"><b id="digit">–</b><span id="conf">Dibuja algo para empezar</span></div>
+      <div class="bars" id="bars"></div>
+      <div class="seen">
+        <canvas id="mini" width="8" height="8" aria-label="Imagen de 8x8 que recibe el modelo"></canvas>
+        <p>Esto es lo que ve el modelo: tu dibujo reducido a 8×8 píxeles, igual que las imágenes con las que se entrenó.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer id="meta">Cargando modelo…</footer>
+</main>
+
+<script>
+  // Grosor del trazo en la rejilla de 32x32 de la que salen los 8x8 (ajustado
+  // para parecerse a los dígitos del dataset original de scikit-learn).
+  const STROKE_32 = 5;
+  const pad = document.getElementById("pad");
+  const ctx = pad.getContext("2d");
+  const bars = document.getElementById("bars");
+  let model = null;
+  let strokes = [];
+  let drawing = false;
+
+  for (let d = 0; d < 10; d++) {
+    bars.insertAdjacentHTML("beforeend", `<div class="bar" id="bar${d}"><span>${d}</span><i></i><span>0%</span></div>`);
+  }
+
+  function paint() {
+    ctx.fillStyle = "#0b0f1c";
+    ctx.fillRect(0, 0, pad.width, pad.height);
+    ctx.strokeStyle = "#ffffff";
+    ctx.fillStyle = "#ffffff";
+    ctx.lineWidth = 20;
+    ctx.lineCap = ctx.lineJoin = "round";
+    for (const s of strokes) {
+      ctx.beginPath();
+      s.forEach(([x, y], i) => (i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)));
+      if (s.length === 1) ctx.lineTo(s[0][0] + 0.1, s[0][1]);
+      ctx.stroke();
+    }
+  }
+
+  // Convierte los trazos en 64 números (0-1): recorta, escala a 32x32 y promedia bloques de 4x4.
+  function toInput() {
+    const pts = strokes.flat();
+    if (!pts.length) return null;
+    const xs = pts.map(p => p[0]), ys = pts.map(p => p[1]);
+    const minX = Math.min(...xs), minY = Math.min(...ys);
+    const w = Math.max(...xs) - minX, h = Math.max(...ys) - minY;
+    const S = 256, k = S / 32;
+    const scale = (32 - STROKE_32) / Math.max(w, h, 1e-6);
+    const ox = 16 - (w * scale) / 2, oy = 16 - (h * scale) / 2;
+    const off = document.createElement("canvas");
+    off.width = off.height = S;
+    const o = off.getContext("2d");
+    o.fillStyle = "#000"; o.fillRect(0, 0, S, S);
+    o.strokeStyle = o.fillStyle = "#fff";
+    o.lineWidth = STROKE_32 * k;
+    o.lineCap = o.lineJoin = "round";
+    for (const s of strokes) {
+      o.beginPath();
+      s.forEach(([x, y], i) => {
+        const px = ((x - minX) * scale + ox) * k, py = ((y - minY) * scale + oy) * k;
+        i ? o.lineTo(px, py) : o.moveTo(px, py);
+      });
+      if (s.length === 1) o.lineTo(((s[0][0] - minX) * scale + ox) * k + 0.1, ((s[0][1] - minY) * scale + oy) * k);
+      o.stroke();
+    }
+    const data = o.getImageData(0, 0, S, S).data;
+    const cell = S / 8, input = new Array(64).fill(0);
+    for (let y = 0; y < S; y++) for (let x = 0; x < S; x++) {
+      input[Math.floor(y / cell) * 8 + Math.floor(x / cell)] += data[(y * S + x) * 4] / 255;
+    }
+    return input.map(v => v / (cell * cell));
+  }
+
+  function predict(x) {
+    const hidden = model.b1.map((b, j) => Math.max(0, x.reduce((acc, xi, i) => acc + xi * model.W1[i][j], b)));
+    const logits = model.b2.map((b, j) => hidden.reduce((acc, hi, i) => acc + hi * model.W2[i][j], b));
+    const max = Math.max(...logits);
+    const exp = logits.map(z => Math.exp(z - max));
+    const sum = exp.reduce((a, b) => a + b, 0);
+    return exp.map(e => e / sum);
+  }
+
+  function update() {
+    paint();
+    const x = toInput();
+    const mini = document.getElementById("mini").getContext("2d");
+    const img = mini.createImageData(8, 8);
+    (x || new Array(64).fill(0)).forEach((v, i) => {
+      const g = Math.round(v * 255);
+      img.data.set([g, g, g, 255], i * 4);
+    });
+    mini.putImageData(img, 0, 0);
+    if (!x || !model) {
+      document.getElementById("digit").textContent = "–";
+      document.getElementById("conf").textContent = model ? "Dibuja algo para empezar" : "Cargando modelo…";
+      for (let d = 0; d < 10; d++) setBar(d, 0, false);
+      return;
+    }
+    const p = predict(x);
+    const best = p.indexOf(Math.max(...p));
+    document.getElementById("digit").textContent = best;
+    document.getElementById("conf").textContent = `con un ${(p[best] * 100).toFixed(0)} % de confianza`;
+    p.forEach((v, d) => setBar(d, v, d === best));
+  }
+
+  function setBar(d, v, top) {
+    const el = document.getElementById("bar" + d);
+    el.classList.toggle("top", top);
+    el.querySelector("i").style.setProperty("--p", (v * 100).toFixed(1) + "%");
+    el.lastElementChild.textContent = (v * 100).toFixed(0) + "%";
+  }
+
+  function point(e) {
+    const r = pad.getBoundingClientRect();
+    return [(e.clientX - r.left) * (pad.width / r.width), (e.clientY - r.top) * (pad.height / r.height)];
+  }
+  pad.addEventListener("pointerdown", e => { drawing = true; pad.setPointerCapture(e.pointerId); strokes.push([point(e)]); update(); });
+  pad.addEventListener("pointermove", e => { if (drawing) { strokes[strokes.length - 1].push(point(e)); update(); } });
+  pad.addEventListener("pointerup", () => { drawing = false; });
+  pad.addEventListener("pointercancel", () => { drawing = false; });
+  document.getElementById("clear").addEventListener("click", () => { strokes = []; update(); });
+  document.getElementById("sample").addEventListener("click", () => {
+    // Un "3" dibujado a mano alzada, para ver la demo funcionando sin tocar nada.
+    const t = [[0.2,0.1],[0.5,0],[0.8,0.15],[0.75,0.4],[0.45,0.5],[0.8,0.6],[0.85,0.85],[0.5,1],[0.15,0.9]];
+    strokes = [t.map(([x, y]) => [80 + x * 120, 50 + y * 180])];
+    update();
+  });
+
+  fetch("model.json")
+    .then(r => r.json())
+    .then(m => {
+      model = m;
+      document.getElementById("meta").innerHTML =
+        `Modelo <code>${m.architecture}</code> · precisión en test: <b>${(m.accuracy * 100).toFixed(1)} %</b> sobre ${m.n_test} imágenes que nunca vio al entrenar.`;
+      document.getElementById("sample").click();
+    })
+    .catch(() => {
+      document.getElementById("meta").textContent =
+        "No se pudo cargar model.json. Ábrelo con un servidor (python -m http.server) o desde GitHub Pages.";
+    });
+  update();
+</script>
+</body>
+</html>
