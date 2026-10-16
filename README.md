@@ -1,5 +1,8 @@
 # Claude Code en el Aula
 
+**🌐 Ver la clase: https://daniel01010101010101.github.io/Claude_Code/**
+· Demo del proyecto: https://daniel01010101010101.github.io/Claude_Code/proyecto-ml/
+
 Material para dar una clase completa de **Claude Code desde cero hasta nivel avanzado**, pensada para
 estudiantes que quieren hacer su propio proyecto de machine learning y publicarlo en GitHub Pages.
 
@@ -19,14 +22,23 @@ Abre `index.html` en el navegador. El botón **Modo presentación** amplía el t
 el docente y permite avanzar por bloques con las flechas ← →. El botón **Cambiar tema** alterna claro y
 oscuro.
 
-## Publicar esta clase en GitHub Pages
+## Cómo se publica
 
-1. En el repositorio: **Settings → Pages → Build and deployment → Source: Deploy from a branch**.
-2. Elige la rama que contiene este `index.html` y la carpeta **/ (root)**, y pulsa **Save**.
-3. En uno o dos minutos estará en `https://TU-USUARIO.github.io/NOMBRE-DEL-REPO/`, con la demo del
-   proyecto en `.../proyecto-ml/`.
+El workflow [`.github/workflows/pages.yml`](.github/workflows/pages.yml) publica el sitio en cada push a la
+rama principal del repositorio. Antes de publicar pasa los tests del modelo y ejecuta
+[`scripts/check_site.py`](scripts/check_site.py), que comprueba que la demo de la portada usa el mismo
+modelo que `proyecto-ml/model.json` y que no hay enlaces rotos. Si algo falla, no se publica y la versión
+anterior sigue en línea.
 
-El archivo `.nojekyll` hace que GitHub Pages sirva los archivos tal cual, sin procesarlos con Jekyll.
+Configuración necesaria (una sola vez): **Settings → Pages → Build and deployment → Source: GitHub Actions**.
+
+| Archivo | Para qué sirve |
+|---|---|
+| `index.html` | La clase |
+| `404.html` | Página para enlaces que no existen |
+| `og.png` | Imagen de vista previa al compartir el enlace (WhatsApp, Teams, redes) |
+| `.nojekyll` | Sirve los archivos tal cual, sin procesarlos con Jekyll |
+| `proyecto-ml/` | Proyecto de ejemplo y su demo |
 
 ## Regenerar el modelo
 
@@ -38,4 +50,4 @@ python train.py && python -m pytest -q
 
 Si reentrenas, copia el contenido de `proyecto-ml/model.json` dentro de
 `<script type="application/json" id="model-data">` en `index.html` para que la demo de la portada use el
-modelo nuevo.
+modelo nuevo. `python scripts/check_site.py` te avisa si se te olvida.

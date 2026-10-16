@@ -1,0 +1,70 @@
+# Publica la clase en GitHub Pages: https://daniel01010101010101.github.io/Claude_Code/
+#
+# En cada push a la rama principal del repositorio:
+#   1. Pasa los tests del modelo de ejemplo.
+#   2. Comprueba que la demo de la portada usa el mismo modelo y que no hay enlaces rotos.
+#   3. Publica el sitio. Si algo falla, no se publica nada y la versión anterior sigue en línea.
+#
+# Requisito (una sola vez): Settings → Pages → Build and deployment → Source: "GitHub Actions".
+
+name: Publicar en GitHub Pages
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    # Solo se publica desde la rama principal (la "default branch" del repositorio).
+    if: github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: proyecto-ml/requirements.txt
+
+      - name: Instalar dependencias
+        run: pip install -r proyecto-ml/requirements.txt
+
+      - name: Tests del modelo
+        working-directory: proyecto-ml
+        run: python -m pytest -q
+
+      - name: Comprobar modelo y enlaces del sitio
+        run: python scripts/check_site.py
+
+      - name: Preparar el sitio
+        run: |
+          mkdir _site
+          cp index.html 404.html og.png .nojekyll _site/
+          cp -r proyecto-ml _site/proyecto-ml
+          find _site -name "__pycache__" -prune -exec rm -rf {} +
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

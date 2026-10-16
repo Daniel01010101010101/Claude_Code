@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Reconocedor de Dígitos</title>
 <meta name="description" content="Dibuja un número del 0 al 9 y una red neuronal entrenada con scikit-learn lo reconoce en tu navegador.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f4bdb'/%3E%3Cpath d='M18 22l12 10-12 10' stroke='white' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M34 44h12' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500&family=JetBrains+Mono:wght@400;600&display=swap">
@@ -50,12 +51,15 @@
   canvas#mini { width: 96px; height: 96px; image-rendering: pixelated; border: 1px solid var(--line); border-radius: 6px; }
   .seen p { margin: 0; color: var(--muted); font-size: 14px; }
   footer { color: var(--muted); font-size: 14px; }
+  nav.top { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: 15px; }
+  nav.top a { color: var(--accent); text-underline-offset: 3px; }
   code { font-family: var(--mono); font-size: .9em; }
   @media (prefers-reduced-motion: reduce) { .bar i::after { transition: none; } }
 </style>
 </head>
 <body>
 <main>
+  <nav class="top"><a href="../index.html">← Volver a la clase</a><a href="https://github.com/Daniel01010101010101/Claude_Code/tree/HEAD/proyecto-ml">Ver el código en GitHub ↗</a></nav>
   <header>
     <h1>Reconocedor de dígitos</h1>
     <p class="lead">Dibuja un número del 0 al 9. Una red neuronal entrenada en Python con scikit-learn lo reconoce aquí mismo, en tu navegador, sin servidor.</p>
