@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Claude Code en el Aula</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="Clase completa de Claude Code desde cero: instalación, GitHub, atajos, prompts, skills, funciones avanzadas y un proyecto de machine learning publicado en GitHub Pages.">
+<meta name="description" content="Clase completa de Claude Code desde cero, sin instalar nada: la interfaz de la app, los modelos, entornos en la nube conectados a GitHub, prompts, skills y un proyecto de machine learning publicado en GitHub Pages.">
 <link rel="canonical" href="https://daniel01010101010101.github.io/Claude_Code/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f4bdb'/%3E%3Cpath d='M18 22l12 10-12 10' stroke='white' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M34 44h12' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 <meta name="theme-color" content="#2f4bdb">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_ES">
 <meta property="og:title" content="Claude Code en el Aula">
-<meta property="og:description" content="Clase de Claude Code de cero a avanzado: GitHub, atajos, prompts, skills y un proyecto de machine learning publicado en GitHub Pages.">
+<meta property="og:description" content="Clase de Claude Code desde la app de Claude: interfaz, modelos, entornos en la nube con GitHub, prompts, skills y un proyecto de machine learning en GitHub Pages.">
 <meta property="og:url" content="https://daniel01010101010101.github.io/Claude_Code/">
 <meta property="og:image" content="https://daniel01010101010101.github.io/Claude_Code/og.png">
 <meta property="og:image:width" content="1200">
@@ -245,6 +245,49 @@ figcaption b { color: var(--ink); font-weight: 600; }
 .diffstat .add { color: var(--good); } .diffstat .del { color: var(--bad); }
 @media (max-width: 560px) { .ui-side { grid-template-columns: minmax(0, 1fr); } .ui-nav { grid-auto-flow: column; overflow-x: auto; } }
 
+/* Recreación de la interfaz de la app */
+.app-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: var(--surface); box-shadow: 0 10px 30px -18px rgba(19, 26, 44, 0.35); }
+.app-mock { display: grid; grid-template-columns: 200px minmax(0, 1fr) 215px; min-width: 840px; font-size: 0.82rem; line-height: 1.45; }
+.app-side { background: var(--surface-2); padding: 12px; display: grid; gap: 14px; align-content: start; border-right: 1px solid var(--line); }
+.app-row { display: flex; gap: 6px; align-items: center; }
+.app-search { flex: 1; border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; background: var(--surface); color: var(--muted); }
+.app-nav { display: grid; gap: 2px; }
+.app-nav span { padding: 3px 6px; }
+.app-group { display: grid; gap: 2px; }
+.app-label { display: flex; gap: 6px; align-items: center; justify-content: space-between; font-weight: 600; font-size: 0.74rem; color: var(--muted); }
+.app-sess { padding: 4px 6px; border-radius: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.app-sess.on { background: var(--surface); font-weight: 600; }
+.app-user { border-top: 1px solid var(--line); padding-top: 8px; color: var(--muted); }
+.app-main { display: grid; grid-template-rows: auto 1fr auto; min-width: 0; }
+.app-title { display: flex; gap: 8px; align-items: center; padding: 10px 14px; border-bottom: 1px solid var(--line); font-weight: 600; }
+.app-chat { padding: 14px; display: grid; gap: 10px; align-content: start; }
+.app-msg { padding: 8px 12px; border-radius: 10px; max-width: 92%; }
+.app-msg.me { background: var(--surface-2); justify-self: end; }
+.app-card { display: flex; justify-content: space-between; gap: 12px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 12px; font-family: var(--mono); }
+.app-input { padding: 12px 14px; display: grid; gap: 6px; }
+.app-box { display: flex; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 12px; padding: 10px 12px; }
+.app-box .muted { flex: 1; }
+.app-plus { font-weight: 700; }
+.app-under { display: flex; justify-content: space-between; gap: 10px; color: var(--muted); }
+.app-chip { padding: 2px 8px; border-radius: 6px; background: var(--surface-2); color: var(--ink); }
+.app-ring { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--accent); border-right-color: var(--line); vertical-align: middle; }
+.app-panel { border-left: 1px solid var(--line); padding: 12px; display: grid; gap: 10px; align-content: start; background: var(--bg); }
+.app-sect { border: 1px solid var(--line); border-radius: 10px; padding: 10px; display: grid; gap: 4px; background: var(--surface); }
+.app-meter { height: 6px; border-radius: 3px; background: var(--surface-2); overflow: hidden; display: block; }
+.app-meter i { display: block; height: 100%; background: var(--accent); }
+.pin, .legend li::before { display: inline-grid; place-items: center; min-width: 20px; height: 20px; padding: 0 5px; border-radius: 10px; background: var(--amber); color: var(--surface); font: 700 0.72rem/1 var(--body); flex: none; }
+.legend { list-style: none; padding: 0; margin: 0; counter-reset: lg; display: grid; gap: 10px 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 330px), 1fr)); }
+.legend li { counter-increment: lg; display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 10px; margin: 0; font-size: 0.94rem; }
+.legend li::before { content: counter(lg); margin-top: 2px; }
+
+/* Modelos */
+.spectrum { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 12px; align-items: center; font-size: 0.82rem; color: var(--muted); }
+.spectrum i { display: block; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--line), var(--accent)); }
+.models { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 190px), 1fr)); }
+.model h4 { font-size: 1.15rem; }
+.model.hl { border-color: var(--accent); background: var(--accent-soft); }
+.model p.use { color: var(--ink); }
+
 /* Diagrama del bucle */
 .diagram { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 12px; overflow-x: auto; }
 .diagram svg { display: block; width: 100%; min-width: 560px; height: auto; }
@@ -376,13 +419,13 @@ body.present .teacher { display: none; }
     <div>
       <p class="eyebrow">Clase práctica · de cero a avanzado</p>
       <h1>Claude Code<br><span>en el aula</span></h1>
-      <p class="lead">Aprende a trabajar con un agente de programación de verdad: instálalo, conéctalo a GitHub, escríbele buenos prompts, crea tus propias skills y publica tu proyecto de machine learning en GitHub Pages tú solo.</p>
+      <p class="lead">Aprende a trabajar con un agente de programación desde la app de Claude, sin instalar nada: conéctalo a GitHub con un entorno en la nube, conoce su interfaz y sus modelos, escríbele buenos prompts, crea tus propias skills y publica tu proyecto de machine learning en GitHub Pages tú solo.</p>
       <div class="chips">
         <span class="chip">≈ 3 h de clase</span>
         <span class="chip">8 bloques</span>
         <span class="chip">Proyecto final de ML</span>
       </div>
-      <p class="req">Necesitas una cuenta de GitHub y un plan Claude Pro, Max, Team o Enterprise (o una cuenta de Console).</p>
+      <p class="req">Necesitas una cuenta de GitHub y un plan de Claude con Claude Code (Pro, Max, Team o Enterprise). Solo el navegador o la app de Claude.</p>
       <div class="hero-actions">
         <a class="btn primary" href="#plan">Empezar la clase</a>
         <button class="btn" type="button" id="present-toggle">Modo presentación</button>
@@ -422,17 +465,17 @@ body.present .teacher { display: none; }
       <p class="toc-group">Antes de empezar</p>
       <ol><li><a href="#plan">Plan y cómo usar esta página</a></li></ol>
       <p class="toc-group">Bloque 1 · Fundamentos</p>
-      <ol><li><a href="#que-es">Qué es Claude Code</a></li><li><a href="#instalar">Instalación y primera sesión</a></li></ol>
-      <p class="toc-group">Bloque 2 · GitHub</p>
-      <ol><li><a href="#github">Tres formas de conectar</a></li></ol>
-      <p class="toc-group">Bloque 3 · Manejo</p>
-      <ol><li><a href="#interfaz">Atajos y comandos</a></li><li><a href="#permisos">Modos de permiso</a></li></ol>
-      <p class="toc-group">Bloque 4 · Prompts</p>
-      <ol><li><a href="#prompts">Prompts que funcionan</a></li></ol>
+      <ol><li><a href="#que-es">Qué es Claude Code</a></li><li><a href="#empezar">Tu primera sesión</a></li></ol>
+      <p class="toc-group">Bloque 2 · Interfaz y modelos</p>
+      <ol><li><a href="#interfaz">La interfaz, parte por parte</a></li><li><a href="#modelos">Los modelos</a></li></ol>
+      <p class="toc-group">Bloque 3 · Entorno y GitHub</p>
+      <ol><li><a href="#entorno">Entornos en la nube y PR</a></li></ol>
+      <p class="toc-group">Bloque 4 · Prompts y control</p>
+      <ol><li><a href="#controles">Modos y comandos</a></li><li><a href="#prompts">Prompts que funcionan</a></li></ol>
       <p class="toc-group">Bloque 5 · Memoria y skills</p>
       <ol><li><a href="#memoria">CLAUDE.md</a></li><li><a href="#skills">Skills</a></li></ol>
       <p class="toc-group">Bloque 6 · Avanzado</p>
-      <ol><li><a href="#avanzado">Subagentes, hooks, MCP…</a></li></ol>
+      <ol><li><a href="#avanzado">Subagentes, hooks, conectores…</a></li></ol>
       <p class="toc-group">Bloque 7 · Proyecto</p>
       <ol><li><a href="#proyecto">Modelo de ML paso a paso</a></li></ol>
       <p class="toc-group">Bloque 8 · Publicar</p>
@@ -453,17 +496,17 @@ body.present .teacher { display: none; }
       <p class="toc-group">Antes de empezar</p>
       <ol><li><a href="#plan">Plan y cómo usar esta página</a></li></ol>
       <p class="toc-group">Bloque 1 · Fundamentos</p>
-      <ol><li><a href="#que-es">Qué es Claude Code</a></li><li><a href="#instalar">Instalación y primera sesión</a></li></ol>
-      <p class="toc-group">Bloque 2 · GitHub</p>
-      <ol><li><a href="#github">Tres formas de conectar</a></li></ol>
-      <p class="toc-group">Bloque 3 · Manejo</p>
-      <ol><li><a href="#interfaz">Atajos y comandos</a></li><li><a href="#permisos">Modos de permiso</a></li></ol>
-      <p class="toc-group">Bloque 4 · Prompts</p>
-      <ol><li><a href="#prompts">Prompts que funcionan</a></li></ol>
+      <ol><li><a href="#que-es">Qué es Claude Code</a></li><li><a href="#empezar">Tu primera sesión</a></li></ol>
+      <p class="toc-group">Bloque 2 · Interfaz y modelos</p>
+      <ol><li><a href="#interfaz">La interfaz, parte por parte</a></li><li><a href="#modelos">Los modelos</a></li></ol>
+      <p class="toc-group">Bloque 3 · Entorno y GitHub</p>
+      <ol><li><a href="#entorno">Entornos en la nube y PR</a></li></ol>
+      <p class="toc-group">Bloque 4 · Prompts y control</p>
+      <ol><li><a href="#controles">Modos y comandos</a></li><li><a href="#prompts">Prompts que funcionan</a></li></ol>
       <p class="toc-group">Bloque 5 · Memoria y skills</p>
       <ol><li><a href="#memoria">CLAUDE.md</a></li><li><a href="#skills">Skills</a></li></ol>
       <p class="toc-group">Bloque 6 · Avanzado</p>
-      <ol><li><a href="#avanzado">Subagentes, hooks, MCP…</a></li></ol>
+      <ol><li><a href="#avanzado">Subagentes, hooks, conectores…</a></li></ol>
       <p class="toc-group">Bloque 7 · Proyecto</p>
       <ol><li><a href="#proyecto">Modelo de ML paso a paso</a></li></ol>
       <p class="toc-group">Bloque 8 · Publicar</p>
@@ -482,7 +525,7 @@ body.present .teacher { display: none; }
       <h3>Cómo usar esta página</h3>
       <div class="grid">
         <div class="card"><span class="tag">Si das la clase</span><p>Pulsa <b>Modo presentación</b>: el texto se agranda, las notas para el docente se ocultan y avanzas por bloques con <kbd>←</kbd> <kbd>→</kbd>. El <b>#</b> junto a cada título copia el enlace a esa sección para compartirlo.</p></div>
-        <div class="card"><span class="tag">Si eres estudiante</span><p>Sigue los bloques en orden con Claude Code abierto al lado. Copia los comandos y prompts con el botón <b>Copiar</b> y marca tu avance en la <a href="#checklist">lista de control</a> del proyecto.</p></div>
+        <div class="card"><span class="tag">Si eres estudiante</span><p>Sigue los bloques en orden con claude.ai/code o la app abierta al lado. Copia los comandos y prompts con el botón <b>Copiar</b> y marca tu avance en la <a href="#checklist">lista de control</a> del proyecto.</p></div>
         <div class="card"><span class="tag">Si ya sabes lo básico</span><p>Salta a <a href="#skills">Skills</a>, al <a href="#avanzado">nivel avanzado</a> o directamente al <a href="#proyecto">proyecto de ML</a> y a <a href="#desplegar">GitHub Pages</a>.</p></div>
       </div>
       <h3>Los 8 bloques</h3>
@@ -490,18 +533,18 @@ body.present .teacher { display: none; }
         <table>
           <thead><tr><th>Bloque</th><th>Contenido</th><th>Tiempo</th><th>Resultado</th></tr></thead>
           <tbody>
-            <tr><td><b>1. Fundamentos</b></td><td>Qué es un agente, ventajas, instalación y primera sesión</td><td>25 min</td><td>Claude Code funcionando en tu ordenador</td></tr>
-            <tr><td><b>2. GitHub</b></td><td>Tres formas de conectar: terminal, web y @claude en GitHub</td><td>25 min</td><td>Repositorio creado y conectado</td></tr>
-            <tr><td><b>3. Manejo</b></td><td>Atajos, comandos y modos de permiso</td><td>15 min</td><td>Te mueves con soltura por la interfaz</td></tr>
-            <tr><td><b>4. Prompts</b></td><td>Anatomía de un buen prompt y flujo explorar → planificar → programar</td><td>25 min</td><td>Plantilla de prompt propia</td></tr>
-            <tr><td><b>5. Memoria y skills</b></td><td>CLAUDE.md, crear, buscar e instalar skills</td><td>25 min</td><td>Tu primera skill</td></tr>
-            <tr><td><b>6. Avanzado</b></td><td>Subagentes, hooks, MCP, plugins, modo headless y sesiones en la nube</td><td>20 min</td><td>Sabes cuándo usar cada pieza</td></tr>
-            <tr><td><b>7. Proyecto</b></td><td>Reconocedor de dígitos de cero a producción</td><td>40 min</td><td>Modelo entrenado, testeado y en una web</td></tr>
+            <tr><td><b>1. Fundamentos</b></td><td>Qué es un agente, ventajas y primera sesión en claude.ai/code</td><td>20 min</td><td>Primera tarea hecha en la nube</td></tr>
+            <tr><td><b>2. Interfaz y modelos</b></td><td>Cada parte de la pantalla y qué modelo y esfuerzo elegir</td><td>20 min</td><td>Te mueves con soltura por la app</td></tr>
+            <tr><td><b>3. Entorno y GitHub</b></td><td>Entornos en la nube, red, script de configuración, ramas y pull requests</td><td>25 min</td><td>Repositorio conectado y entorno listo</td></tr>
+            <tr><td><b>4. Prompts y control</b></td><td>Modos de permiso, comandos y prompts que funcionan</td><td>25 min</td><td>Plantilla de prompt propia</td></tr>
+            <tr><td><b>5. Memoria y skills</b></td><td>CLAUDE.md, crear skills y activarlas en Personalización</td><td>25 min</td><td>Tu primera skill</td></tr>
+            <tr><td><b>6. Avanzado</b></td><td>Subagentes, hooks, conectores, Auto-fix y sesiones en paralelo</td><td>15 min</td><td>Sabes cuándo usar cada pieza</td></tr>
+            <tr><td><b>7. Proyecto</b></td><td>Reconocedor de dígitos de cero a producción</td><td>50 min</td><td>Modelo entrenado, testeado y en una web</td></tr>
             <tr><td><b>8. Publicar</b></td><td>GitHub Pages con y sin GitHub Actions</td><td>10 min</td><td>URL pública para compartir</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="teacher"><b>Nota para el docente:</b> pide que instalen Claude Code y creen la cuenta de GitHub antes de clase. Con el <b>modo presentación</b> (botón arriba o en el índice) la página se ve en grande y avanzas por bloques con las flechas <kbd>←</kbd> <kbd>→</kbd>. Estas notas se ocultan al presentar.</div>
+      <div class="teacher"><b>Nota para el docente:</b> antes de clase, pide que cada estudiante tenga cuenta de GitHub y un plan de Claude con Claude Code, y que entre una vez en claude.ai/code para conectar GitHub. Con el <b>modo presentación</b> (botón arriba o en el índice) la página se ve en grande y avanzas por bloques con las flechas <kbd>←</kbd> <kbd>→</kbd>. Estas notas se ocultan al presentar.</div>
     </section>
 
     <!-- 01 · QUÉ ES -->
@@ -511,7 +554,8 @@ body.present .teacher { display: none; }
         <h2>Qué es Claude Code y por qué cambia cómo programas</h2>
       </header>
       <div class="prose">
-        <p>Claude Code es un <b>agente de programación</b>. Un chat normal te responde con texto y tú copias y pegas. Un agente trabaja dentro de tu proyecto: lee tus archivos, ejecuta comandos en la terminal, edita código, lanza los tests, mira si fallan, corrige y hace commits. Tú describes <i>qué</i> quieres; Claude explora, planifica y lo implementa mientras tú supervisas.</p>
+        <p>Claude Code es un <b>agente de programación</b>. Un chat normal te responde con texto y tú copias y pegas. Un agente trabaja dentro de tu proyecto: lee tus archivos, ejecuta comandos, edita código, lanza los tests, mira si fallan, corrige y sube los cambios a GitHub. Tú describes <i>qué</i> quieres; Claude explora, planifica y lo implementa mientras tú supervisas.</p>
+        <p>En esta clase lo usaremos <b>desde la app de Claude o desde el navegador</b>, sin instalar nada: Claude trabaja en un <b>entorno en la nube</b>, un ordenador virtual con tu repositorio de GitHub ya descargado.</p>
       </div>
       <figure class="diagram" aria-label="Diagrama del bucle de trabajo de un agente">
         <svg viewBox="0 0 680 230" role="img" aria-labelledby="loop-title">
@@ -527,15 +571,15 @@ body.present .teacher { display: none; }
           <rect class="node" x="185" y="40" width="140" height="84" rx="12"/>
           <text class="t1" x="255" y="74" text-anchor="middle">2 · Plan</text>
           <text class="t2" x="255" y="94" text-anchor="middle">decide los pasos</text>
-          <text class="t2" x="255" y="110" text-anchor="middle">(modo plan)</text>
+          <text class="t2" x="255" y="110" text-anchor="middle">(modo Plan)</text>
           <rect class="node" x="360" y="40" width="140" height="84" rx="12"/>
           <text class="t1" x="430" y="74" text-anchor="middle">3 · Acción</text>
           <text class="t2" x="430" y="94" text-anchor="middle">edita, ejecuta,</text>
           <text class="t2" x="430" y="110" text-anchor="middle">busca en la web</text>
           <rect class="node hl" x="535" y="40" width="135" height="84" rx="12"/>
           <text class="t1" x="602" y="74" text-anchor="middle">4 · Verifica</text>
-          <text class="t2" x="602" y="94" text-anchor="middle">tests, build,</text>
-          <text class="t2" x="602" y="110" text-anchor="middle">capturas</text>
+          <text class="t2" x="602" y="94" text-anchor="middle">tests, comandos,</text>
+          <text class="t2" x="602" y="110" text-anchor="middle">resultados</text>
           <path class="arrow" d="M150 82 H182" marker-end="url(#ah)"/>
           <path class="arrow" d="M325 82 H357" marker-end="url(#ah)"/>
           <path class="arrow" d="M500 82 H532" marker-end="url(#ah)"/>
@@ -548,377 +592,356 @@ body.present .teacher { display: none; }
         <table>
           <thead><tr><th></th><th>Chat de IA</th><th>Autocompletado en el editor</th><th>Claude Code (agente)</th></tr></thead>
           <tbody>
-            <tr><td><b>Ve tu proyecto</b></td><td>Solo lo que pegas</td><td>El archivo abierto</td><td>Todo el repositorio, git y la terminal</td></tr>
+            <tr><td><b>Ve tu proyecto</b></td><td>Solo lo que pegas</td><td>El archivo abierto</td><td>Todo el repositorio de GitHub</td></tr>
             <tr><td><b>Ejecuta código</b></td><td>No</td><td>No</td><td>Sí: tests, scripts, instalaciones</td></tr>
             <tr><td><b>Comprueba su trabajo</b></td><td>No</td><td>No</td><td>Sí, repite hasta que pasan los tests</td></tr>
             <tr><td><b>Cambios en varios archivos</b></td><td>Manual</td><td>Línea a línea</td><td>Coordinados, con plan previo</td></tr>
-            <tr><td><b>Git y GitHub</b></td><td>No</td><td>No</td><td>Commits, ramas, PR, revisiones, despliegues</td></tr>
+            <tr><td><b>GitHub</b></td><td>No</td><td>No</td><td>Ramas, commits y pull requests</td></tr>
           </tbody>
         </table>
       </div>
       <h3>Ventajas para ti como estudiante</h3>
       <div class="grid two">
         <div class="card"><h4>Aprendes explicando</h4><p>Le pides que te explique un archivo, un error o una decisión. Con el estilo <code>Learning</code> te deja huecos <code>TODO(human)</code> para que escribas tú las partes importantes.</p></div>
-        <div class="card"><h4>Proyectos reales antes</h4><p>Pasas de la idea a algo publicado (modelo + web + CI) en una tarde, y dedicas el tiempo a entender en vez de pelearte con la configuración.</p></div>
+        <div class="card"><h4>Sin instalar nada</h4><p>Todo ocurre en un entorno en la nube con Python, Node y git ya preparados. Funciona igual en el portátil de clase, en casa o desde el móvil.</p></div>
         <div class="card"><h4>Buenas prácticas gratis</h4><p>Tests, commits con sentido, README, separación train/test… Si se lo pides, lo hace siempre, y tú ves cómo se hace bien.</p></div>
         <div class="card"><h4>Habilidad profesional</h4><p>Dirigir agentes (contexto, especificación, verificación) es lo que se pide ya en los equipos de software y datos.</p></div>
       </div>
       <h3>Dónde puedes usarlo</h3>
       <div class="grid">
-        <div class="card"><span class="tag">Terminal</span><p>La versión completa: <code>claude</code> en cualquier carpeta. Es la que usaremos en clase.</p></div>
-        <div class="card"><span class="tag">Editor</span><p>Extensiones para VS Code (y Cursor) y JetBrains, con los cambios en el propio editor.</p></div>
-        <div class="card"><span class="tag">App de escritorio</span><p>Pestaña <b>Code</b> de la app de Claude para macOS, Windows y Linux, sin terminal.</p></div>
-        <div class="card"><span class="tag">Web y móvil</span><p><a href="https://claude.ai/code">claude.ai/code</a> y la app móvil: sesiones en la nube sobre tus repos de GitHub.</p></div>
-        <div class="card"><span class="tag">GitHub</span><p>Escribes <code>@claude</code> en un issue o PR y trabaja con GitHub Actions.</p></div>
-        <div class="card"><span class="tag">Scripts y CI</span><p><code>claude -p "…"</code> en modo no interactivo para automatizar tareas.</p></div>
+        <div class="card"><span class="tag">Navegador</span><p><a href="https://claude.ai/code">claude.ai/code</a>: entra con tu cuenta de Claude y empieza. Es la forma más rápida.</p></div>
+        <div class="card"><span class="tag">App de escritorio</span><p>App de Claude para Windows, macOS y Linux, pestaña <b>Code</b>. Elige <b>Cloud</b> para trabajar en un entorno en la nube.</p></div>
+        <div class="card"><span class="tag">Móvil</span><p>Pestaña <b>Code</b> de la app de Claude: revisa cómo va una tarea o lanza otra desde el teléfono.</p></div>
       </div>
+      <p class="muted" style="max-width:70ch">Claude Code también existe como programa de terminal y como extensión para editores. Esta clase no los necesita: todo se hace desde la app o el navegador.</p>
     </section>
 
-    <!-- 02 · INSTALAR -->
-    <section class="block" id="instalar">
+    <!-- 02 · EMPEZAR -->
+    <section class="block" id="empezar">
       <header>
-        <p class="eyebrow">Bloque 1 · Fundamentos <span>· 15 min</span></p>
-        <h2>Instalación y primera sesión, paso a paso</h2>
-        <p class="goal">Requisitos: macOS 13+, Windows 10 (1809)+ o Linux (Ubuntu 20.04+, Debian 10+), 4 GB de RAM, conexión a internet y una cuenta Pro, Max, Team, Enterprise o de Console. El plan gratuito de claude.ai no incluye Claude Code.</p>
+        <p class="eyebrow">Bloque 1 · Fundamentos <span>· 10 min</span></p>
+        <h2>Tu primera sesión, sin instalar nada</h2>
+        <p class="goal">Necesitas una cuenta de GitHub y un plan de Claude con Claude Code: Pro, Max, Team o Enterprise. El plan gratuito no incluye Claude Code.</p>
       </header>
       <ol class="steps">
         <li><div>
-          <h4>Abre una terminal</h4>
-          <p>macOS: app <b>Terminal</b>. Windows: <b>PowerShell</b> (o WSL si trabajas con Linux). Linux: tu terminal habitual. En Windows conviene instalar también <a href="https://git-scm.com/downloads/win">Git for Windows</a>.</p>
+          <h4>Abre Claude Code</h4>
+          <p>Entra en <a href="https://claude.ai/code">claude.ai/code</a> e inicia sesión con tu cuenta de Claude. Si prefieres la app de escritorio, abre la pestaña <b>Code</b>.</p>
         </div></li>
         <li><div>
-          <h4>Instala Claude Code con el instalador oficial</h4>
-          <div class="tabs" data-tabs>
-            <div class="tablist" role="tablist" aria-label="Sistema operativo">
-              <button role="tab" aria-selected="true" aria-controls="os-1" id="os-1-t">macOS / Linux / WSL</button>
-              <button role="tab" aria-selected="false" aria-controls="os-2" id="os-2-t">Windows PowerShell</button>
-              <button role="tab" aria-selected="false" aria-controls="os-3" id="os-3-t">Homebrew</button>
-              <button role="tab" aria-selected="false" aria-controls="os-4" id="os-4-t">WinGet</button>
-            </div>
-            <div class="code" role="tabpanel" id="os-1" aria-labelledby="os-1-t"><pre>curl -fsSL https://claude.ai/install.sh | bash</pre></div>
-            <div class="code" role="tabpanel" id="os-2" aria-labelledby="os-2-t" hidden><pre>irm https://claude.ai/install.ps1 | iex</pre></div>
-            <div class="code" role="tabpanel" id="os-3" aria-labelledby="os-3-t" hidden><pre>brew install --cask claude-code</pre></div>
-            <div class="code" role="tabpanel" id="os-4" aria-labelledby="os-4-t" hidden><pre>winget install Anthropic.ClaudeCode</pre></div>
-          </div>
-          <p class="muted">El instalador nativo se actualiza solo. Con Homebrew o WinGet tendrás que actualizar a mano (<code>brew upgrade claude-code</code>).</p>
-        </div></li>
-        <li><div>
-          <h4>Comprueba que funciona</h4>
-          <p>Cierra y abre la terminal y ejecuta:</p>
+          <h4>Conecta tu cuenta de GitHub (solo la primera vez)</h4>
           <figure>
-            <div class="win term">
-              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span>Terminal</div>
-<pre class="term-body"><span class="g">~</span> $ <span class="w">claude --version</span>
-2.1.x (Claude Code)
-<span class="g">~</span> $ <span class="w">claude doctor</span>
-<span class="g">✓</span> Instalación: nativa, actualizaciones automáticas activadas
-<span class="g">✓</span> Ajustes: sin errores
-</pre>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">claude.ai/code</span></div>
+              <div class="page" style="justify-items:center;text-align:center;padding:28px 18px">
+                <b style="font-family:var(--display);font-size:1.15rem">Conecta GitHub para empezar</b>
+                <p class="muted" style="max-width:46ch">Claude descargará tus repositorios en un entorno en la nube, hará los cambios y subirá una rama para que la revises.</p>
+                <span class="ui-btn blue callout-mark">Sign in with GitHub</span>
+              </div>
             </div>
-            <figcaption><b>Figura 1.</b> Si sale un número de versión, está instalado. Si dice <code>command not found</code>, la carpeta de instalación no está en tu PATH: abre una terminal nueva o revisa la guía de solución de problemas.</figcaption>
+            <figcaption><b>Figura 1.</b> Esquema del primer paso. GitHub te pedirá autorizar a Claude. Para trabajar con repositorios <b>privados</b>, instala además la <a href="https://github.com/apps/claude/installations/new">Claude GitHub App</a> en tu cuenta; con los públicos no hace falta.</figcaption>
           </figure>
         </div></li>
         <li><div>
-          <h4>Entra en tu proyecto, lanza <code>claude</code> e inicia sesión</h4>
-          <p>La primera vez se abre el navegador para iniciar sesión con tu cuenta. Después verás la pantalla de bienvenida y el cuadro donde escribes.</p>
+          <h4>El entorno <b>Default</b> se crea solo</h4>
+          <p>En los planes Pro y Max, al conectar GitHub se crea un entorno llamado <b>Default</b>, con acceso a red <b>Trusted</b>: puede instalar paquetes de PyPI o npm y hablar con GitHub, y nada más. En Team y Enterprise aparece un formulario: deja los valores que trae y pulsa <b>Create &amp; finish</b>. Para empezar no tienes que tocar nada; en el bloque 3 verás cómo personalizarlo.</p>
+        </div></li>
+        <li><div>
+          <h4>Elige repositorio, rama y modo, y escribe la tarea</h4>
           <figure>
-            <div class="win term">
-              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span>~/reconocedor-digitos — claude</div>
-<pre class="term-body"><span class="g">~</span> $ <span class="w">mkdir reconocedor-digitos &amp;&amp; cd reconocedor-digitos</span>
-<span class="g">~/reconocedor-digitos</span> $ <span class="w">claude</span>
-
-<span class="term-box"><span class="y">✻</span> Claude Code            <span class="c">~/reconocedor-digitos</span></span>
-
-<span class="c">  Consejo: escribe / para ver comandos, @ para mencionar archivos, ? para atajos</span>
-
-<span class="b">&gt;</span> <span class="w">Explícame qué podemos construir aquí: una web que reconozca dígitos</span>
-<span class="w">  dibujados a mano. Aún no escribas código.</span>
-
-<span class="c">  ⏵⏵ auto mode on (shift+tab para cambiar)</span>
-</pre>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">claude.ai/code</span></div>
+              <div class="page">
+                <div class="ui-box" style="gap:12px">
+                  <span class="muted">Explícame qué hay en este repositorio y propón cómo convertirlo en una web que reconozca dígitos dibujados a mano. Aún no cambies nada.</span>
+                  <div class="row" style="justify-content:space-between">
+                    <span class="row"><span class="ui-select callout-mark">☁ Default</span><span class="ui-select">tu-usuario/reconocedor-digitos</span><span class="ui-select">main</span></span>
+                    <span class="row"><span class="ui-select">Plan</span><span class="ui-select">Opus 5.5</span><span class="ui-btn blue">↑</span></span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <figcaption><b>Figura 2.</b> Ilustración de una primera sesión. Abajo ves el modo de permisos activo; con <kbd>Shift</kbd>+<kbd>Tab</kbd> lo cambias (lo vemos en el bloque 05).</figcaption>
+            <figcaption><b>Figura 2.</b> Pantalla de nueva sesión (esquema). Debajo del cuadro de mensaje eliges el <b>entorno</b>, el <b>repositorio</b> y la <b>rama</b>; a la derecha, el <b>modo</b> y el <b>modelo</b>. El selector de entorno solo aparece antes del primer mensaje.</figcaption>
           </figure>
         </div></li>
         <li><div>
-          <h4>Crea la memoria del proyecto con <code>/init</code></h4>
-          <p>En un proyecto que ya tiene código, <code>/init</code> lo analiza y escribe un <code>CLAUDE.md</code> con los comandos, la estructura y las reglas. Claude lo lee al empezar cada sesión. En el bloque 07 aprenderás a mejorarlo.</p>
+          <h4>Mira cómo trabaja y revisa el resultado</h4>
+          <p>Claude descarga el repositorio en una máquina virtual nueva, trabaja y, al terminar, sube una rama <code>claude/…</code> a GitHub. Tú revisas los cambios y decides si crear un pull request. Puedes cerrar la pestaña: la sesión sigue en la nube y la retomas desde cualquier dispositivo.</p>
         </div></li>
       </ol>
-      <div class="note"><b>Prueba rápida para la clase</b>Que cada estudiante escriba: <code>¿Qué versión de Python tengo instalada y qué paquetes de ciencia de datos me faltan para usar scikit-learn?</code> Claude ejecutará comandos (pidiendo permiso según el modo) y responderá con datos reales de su ordenador.</div>
+      <div class="note"><b>Prueba rápida para la clase</b>Que cada estudiante abra una sesión sobre cualquier repositorio público suyo (o uno nuevo con solo un README) y escriba: <code>¿Qué versión de Python hay en este entorno y qué paquetes de ciencia de datos faltan para usar scikit-learn?</code> Claude ejecutará comandos en el entorno y responderá con datos reales.</div>
     </section>
 
-    <!-- 03 · GITHUB -->
-    <section class="block" id="github">
-      <header>
-        <p class="eyebrow">Bloque 2 · GitHub <span>· 25 min</span></p>
-        <h2>Tres formas de conectar Claude Code con GitHub</h2>
-        <p class="goal">No son excluyentes: en la terminal trabajas en local, en la web lanzas tareas en la nube y en GitHub delegas desde issues y pull requests.</p>
-      </header>
-
-      <div class="tabs" data-tabs>
-        <div class="tablist" role="tablist" aria-label="Formas de conectar con GitHub">
-          <button role="tab" aria-selected="true" aria-controls="gh-1" id="gh-1-t">A · Terminal + gh</button>
-          <button role="tab" aria-selected="false" aria-controls="gh-2" id="gh-2-t">B · Claude Code en la web</button>
-          <button role="tab" aria-selected="false" aria-controls="gh-3" id="gh-3-t">C · @claude en GitHub</button>
-        </div>
-
-        <div role="tabpanel" id="gh-1" aria-labelledby="gh-1-t" class="prose" style="max-width:none">
-          <p>Es la forma recomendada para empezar. Claude usa <code>git</code> y la CLI oficial de GitHub, <code>gh</code>, igual que lo harías tú.</p>
-          <ol class="steps">
-            <li><div><h4>Instala la CLI de GitHub e inicia sesión</h4>
-              <div class="code"><pre><span class="c"># macOS</span>
-brew install gh
-<span class="c"># Windows</span>
-winget install GitHub.cli
-<span class="c"># Después, en cualquier sistema:</span>
-gh auth login</pre></div>
-              <p class="muted">Elige <b>GitHub.com</b>, <b>HTTPS</b> y <b>Login with a web browser</b>. Comprueba con <code>gh auth status</code>.</p>
-            </div></li>
-            <li><div><h4>Pídeselo a Claude en lenguaje natural</h4>
-              <figure>
-                <div class="win term">
-                  <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span>~/reconocedor-digitos — claude</div>
-<pre class="term-body"><span class="b">&gt;</span> <span class="w">Inicializa git, crea un .gitignore para Python, haz el primer commit y</span>
-<span class="w">  crea un repositorio público en GitHub llamado reconocedor-digitos.</span>
-
-<span class="y">●</span> Bash(git init &amp;&amp; git add -A &amp;&amp; git commit -m "Estructura inicial del proyecto")
-  <span class="c">⎿</span> [main (root-commit) 3f2a1c9] Estructura inicial del proyecto
-<span class="y">●</span> Bash(gh repo create reconocedor-digitos --public --source=. --push)
-  <span class="c">⎿</span> <span class="g">✓</span> Created repository tu-usuario/reconocedor-digitos on GitHub
-     <span class="g">✓</span> Pushed commits to https://github.com/tu-usuario/reconocedor-digitos.git
-
-<span class="y">●</span> Listo. Tu repositorio: https://github.com/tu-usuario/reconocedor-digitos
-</pre>
-                </div>
-                <figcaption><b>Figura 3.</b> Claude encadena los comandos de git y gh. Cada línea con <span style="color:var(--amber)">●</span> es una herramienta que ha usado; con <kbd>Ctrl</kbd>+<kbd>O</kbd> ves el detalle completo.</figcaption>
-              </figure>
-            </div></li>
-            <li><div><h4>A partir de aquí, git es conversación</h4>
-              <p>Prueba: <code>crea una rama para la web</code>, <code>¿qué ha cambiado desde el último commit?</code> (o <code>/diff</code>), <code>haz commit con un mensaje que explique el porqué</code>, <code>abre un pull request</code>, <code>revisa mis cambios</code> (<code>/code-review</code>).</p>
-            </div></li>
-          </ol>
-        </div>
-
-        <div role="tabpanel" id="gh-2" aria-labelledby="gh-2-t" hidden class="prose" style="max-width:none">
-          <p>Claude Code también funciona en la nube: entras en <a href="https://claude.ai/code">claude.ai/code</a> (o en la pestaña <b>Code</b> de la app móvil), eliges un repositorio y la sesión sigue trabajando aunque cierres el portátil. Disponible en los planes Pro, Max y Team, y en Enterprise con asientos que lo incluyan.</p>
-          <ol class="steps">
-            <li><div><h4>Conecta GitHub e instala la Claude GitHub App</h4>
-              <p>La primera vez te pide autorizar la app de GitHub de Claude y elegir a qué repositorios puede acceder. Si ya usas <code>gh</code>, también puedes conectar desde la terminal con <code>/web-setup</code>.</p>
-            </div></li>
-            <li><div><h4>Elige repositorio, entorno y escribe la tarea</h4>
-              <figure>
-                <div class="win">
-                  <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">claude.ai/code</span></div>
-                  <div class="page">
-                    <div class="row"><span class="ui-select">📁 tu-usuario/reconocedor-digitos</span><span class="ui-select">rama: main</span><span class="ui-select">Entorno: Default · red Trusted</span></div>
-                    <div class="row"><span class="ui-input callout-mark">Añade un test que compruebe que model.json pesa menos de 1 MB y arregla lo que falle</span><span class="ui-btn blue">Enviar</span></div>
-                    <p class="muted" style="font-size:.82rem">El entorno define el acceso a red, variables y un script de instalación. El entorno por defecto con red <b>Trusted</b> permite instalar paquetes de PyPI y npm.</p>
-                  </div>
-                </div>
-                <figcaption><b>Figura 4.</b> Esquema de la pantalla de nueva tarea: repositorio, rama, entorno y la petición.</figcaption>
-              </figure>
-            </div></li>
-            <li><div><h4>Revisa el diff y crea el pull request</h4>
-              <figure>
-                <div class="win">
-                  <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">claude.ai/code/session_…</span></div>
-                  <div class="page">
-                    <div class="row" style="justify-content:space-between"><b>Test de tamaño para model.json</b><span class="diffstat"><span class="add">+24</span> <span class="del">−3</span></span></div>
-                    <div class="comment"><div>Claude · rama claude/test-tamano-modelo</div><div>He añadido <code>test_model_size</code> en tests/test_model.py y he ejecutado <code>pytest</code>: 4 tests en verde.</div></div>
-                    <div class="row"><span class="ui-btn">Ver diff</span><span class="ui-btn go callout-mark">Create PR</span><span class="ui-btn">Open in ▸ Terminal</span></div>
-                  </div>
-                </div>
-                <figcaption><b>Figura 5.</b> Al terminar ves cuántas líneas cambian, puedes comentar el diff y crear el PR. <b>Open in → Terminal</b> te da el comando para seguir en local.</figcaption>
-              </figure>
-            </div></li>
-          </ol>
-          <div class="code"><pre><span class="c"># Desde la terminal también puedes:</span>
-claude --cloud "Arregla el test que falla en tests/test_model.py"   <span class="c"># lanza una sesión en la nube</span>
-claude --teleport                                                   <span class="c"># trae una sesión de la nube a tu terminal</span></pre></div>
-        </div>
-
-        <div role="tabpanel" id="gh-3" aria-labelledby="gh-3-t" hidden class="prose" style="max-width:none">
-          <p>Con la integración de GitHub Actions, cualquiera con permiso de escritura en el repo puede escribir <code>@claude</code> en un issue o en un pull request y Claude responde, programa y sube commits.</p>
-          <ol class="steps">
-            <li><div><h4>Configúralo desde Claude Code</h4>
-              <p>Necesitas ser admin del repo y tener <code>gh</code> con sesión iniciada. Dentro de <code>claude</code>, ejecuta <code>/install-github-app</code>: instala la Claude GitHub App, guarda el secreto (<code>ANTHROPIC_API_KEY</code> o <code>CLAUDE_CODE_OAUTH_TOKEN</code>, que se genera con <code>claude setup-token</code>) y abre un PR con el workflow. Acepta ese PR.</p>
-            </div></li>
-            <li><div><h4>Pide cosas desde un issue</h4>
-              <figure>
-                <div class="win">
-                  <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">github.com/tu-usuario/reconocedor-digitos/issues/4</span></div>
-                  <div class="page">
-                    <b style="font-family:var(--display);font-size:1.05rem">Mostrar la matriz de confusión en la web #4</b>
-                    <div class="comment"><div>tu-usuario comentó</div><div><b>@claude</b> añade debajo del lienzo una tabla con la matriz de confusión del conjunto de test. Guárdala en model.json desde train.py.</div></div>
-                    <div class="comment"><div>claude <span class="badge">bot</span> comentó</div><div><span class="badge ok">Terminado</span> He abierto un PR: train.py guarda la matriz en model.json e index.html la dibuja como tabla. Tests en verde.</div></div>
-                  </div>
-                </div>
-                <figcaption><b>Figura 6.</b> Claude contesta en el mismo issue, actualiza su comentario mientras trabaja y enlaza el PR.</figcaption>
-              </figure>
-            </div></li>
-          </ol>
-          <div class="code has-label"><span class="label">.github/workflows/claude.yml (mínimo)</span><pre>name: Claude Code
-on:
-  issue_comment:
-    types: [created]
-  pull_request_review_comment:
-    types: [created]
-jobs:
-  claude:
-    if: contains(github.event.comment.body, '@claude')
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-      pull-requests: write
-      issues: write
-      id-token: write
-      actions: read
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - uses: anthropics/claude-code-action@v1
-        with:
-          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}</pre></div>
-          <div class="note warn"><b>Nunca pegues claves en el código</b>Las claves van siempre en <b>Settings → Secrets and variables → Actions</b> del repositorio y se usan como <code>${{ secrets.NOMBRE }}</code>. Si una clave acaba en un commit, considérala filtrada y revócala.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 04 · INTERFAZ -->
+    <!-- 03 · INTERFAZ -->
     <section class="block" id="interfaz">
       <header>
-        <p class="eyebrow">Bloque 3 · Manejo <span>· 10 min</span></p>
-        <h2>Atajos y comandos que usarás a diario</h2>
-        <p class="goal">Escribe <kbd>?</kbd> con la línea vacía para ver los atajos y <kbd>/</kbd> para ver todos los comandos y skills disponibles.</p>
+        <p class="eyebrow">Bloque 2 · Interfaz y modelos <span>· 10 min</span></p>
+        <h2>La interfaz de Claude Code, parte por parte</h2>
+        <p class="goal">Así se ve una sesión en la nube en la app de escritorio. En claude.ai/code la distribución es casi la misma.</p>
       </header>
-      <h3>Lo que escribes al principio de la línea</h3>
-      <div class="grid four">
-        <div class="card"><h4><kbd>/</kbd> Comandos y skills</h4><p><code>/init</code>, <code>/clear</code>, <code>/model</code>… y también tus skills: <code>/entrenar-modelo</code>.</p></div>
-        <div class="card"><h4><kbd>@</kbd> Mencionar archivos</h4><p><code>@train.py</code> autocompleta rutas y hace que Claude lea ese archivo antes de responder.</p></div>
-        <div class="card"><h4><kbd>!</kbd> Modo shell</h4><p><code>!python train.py</code> ejecuta el comando tú mismo y añade la salida a la conversación.</p></div>
-        <div class="card"><h4><kbd>?</kbd> Ayuda</h4><p>Con la línea vacía, muestra el panel de atajos de teclado.</p></div>
-      </div>
-      <h3>Atajos de teclado</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Atajo</th><th>Qué hace</th><th>Cuándo usarlo</th></tr></thead>
-          <tbody>
-            <tr><td><kbd>Esc</kbd></td><td>Interrumpe a Claude y conserva lo hecho</td><td>En cuanto veas que va por mal camino</td></tr>
-            <tr><td><kbd>Esc</kbd> <kbd>Esc</kbd></td><td>Con la línea vacía abre el menú para rebobinar (<code>/rewind</code>) conversación y código</td><td>Deshacer un intento fallido</td></tr>
-            <tr><td><kbd>Shift</kbd>+<kbd>Tab</kbd></td><td>Cambia el modo de permisos: Manual → aceptar ediciones → plan → auto</td><td>Antes de una tarea grande, pasa a modo plan</td></tr>
-            <tr><td><kbd>Shift</kbd>+<kbd>Enter</kbd></td><td>Nueva línea sin enviar (también <kbd>\</kbd> + <kbd>Enter</kbd>; ejecuta <code>/terminal-setup</code> si no funciona)</td><td>Prompts largos</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>G</kbd></td><td>Abre el prompt (o el plan) en tu editor de texto</td><td>Editar prompts o planes largos con calma</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>V</kbd></td><td>Pega una imagen del portapapeles (<kbd>Alt</kbd>+<kbd>V</kbd> en Windows)</td><td>Capturas de errores o diseños</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>O</kbd></td><td>Muestra la transcripción detallada de herramientas</td><td>Ver exactamente qué ha ejecutado</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>T</kbd></td><td>Muestra u oculta la lista de tareas de Claude</td><td>Seguir el progreso de tareas largas</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>B</kbd></td><td>Manda a segundo plano el comando o agente en curso</td><td>Servidores o entrenamientos largos</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>R</kbd></td><td>Busca en el historial de prompts</td><td>Reutilizar un prompt que funcionó</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>S</kbd></td><td>Guarda el borrador actual y vacía la línea; púlsalo otra vez para recuperarlo</td><td>Preguntar algo rápido sin perder lo que escribías</td></tr>
-            <tr><td><kbd>Alt</kbd>+<kbd>P</kbd> / <kbd>Option</kbd>+<kbd>P</kbd></td><td>Cambia de modelo sin borrar el prompt</td><td>Tareas sencillas con un modelo más rápido</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>C</kbd></td><td>Interrumpe; con la línea vacía, borra y un segundo toque sale</td><td>—</td></tr>
-            <tr><td><kbd>Ctrl</kbd>+<kbd>D</kbd></td><td>Sale de Claude Code (pide confirmación)</td><td>Terminar la sesión</td></tr>
-          </tbody>
-        </table>
-      </div>
-      <h3>Comandos esenciales</h3>
-      <div class="grid two">
-        <div class="card"><span class="tag">Empezar</span><ul>
-          <li><code>/init</code> crea <code>CLAUDE.md</code></li>
-          <li><code>/login</code>, <code>/status</code> cuenta, versión y modelo</li>
-          <li><code>/doctor</code> diagnostica y propone arreglos</li>
-          <li><code>/powerup</code> lecciones interactivas de funciones</li>
-        </ul></div>
-        <div class="card"><span class="tag">Contexto</span><ul>
-          <li><code>/clear</code> conversación nueva (entre tareas distintas)</li>
-          <li><code>/compact</code> resume para liberar espacio</li>
-          <li><code>/context</code> qué ocupa la memoria de trabajo</li>
-          <li><code>/btw</code> pregunta rápida que no ensucia el contexto</li>
-          <li><code>/resume</code>, <code>/rename</code>, <code>/rewind</code></li>
-        </ul></div>
-        <div class="card"><span class="tag">Configurar</span><ul>
-          <li><code>/model</code>, <code>/effort</code> modelo y esfuerzo</li>
-          <li><code>/permissions</code> qué puede hacer sin preguntar</li>
-          <li><code>/memory</code> editar CLAUDE.md</li>
-          <li><code>/skills</code>, <code>/plugin</code>, <code>/mcp</code>, <code>/hooks</code></li>
-          <li><code>/output-style</code>, <code>/config</code>, <code>/statusline</code></li>
-        </ul></div>
-        <div class="card"><span class="tag">Git y calidad</span><ul>
-          <li><code>/diff</code> revisa los cambios</li>
-          <li><code>/code-review</code> (o <code>/review</code>) busca errores</li>
-          <li><code>/security-review</code> busca vulnerabilidades</li>
-          <li><code>/install-github-app</code>, <code>/web-setup</code></li>
-          <li><code>/usage</code> consumo y límites del plan</li>
-        </ul></div>
-      </div>
-      <h3>Desde la terminal (fuera de la sesión)</h3>
-      <div class="code"><pre>claude                              <span class="c"># sesión interactiva en la carpeta actual</span>
-claude "explica este proyecto"      <span class="c"># empieza con un prompt</span>
-claude -c                           <span class="c"># continúa la última conversación</span>
-claude -r                           <span class="c"># elige una conversación anterior</span>
-claude --permission-mode plan       <span class="c"># empieza en modo plan</span>
-claude -p "resume el README"        <span class="c"># modo no interactivo: responde y termina</span>
-cat error.log | claude -p "explica este error"
-claude update                       <span class="c"># actualiza a la última versión</span></pre></div>
+      <figure>
+        <div class="app-wrap">
+          <div class="app-mock" role="img" aria-label="Recreación de la interfaz de Claude Code con las partes numeradas del 1 al 11">
+            <aside class="app-side">
+              <div class="app-row"><b class="pin">1</b><span class="app-search">Buscar</span></div>
+              <div class="app-nav"><span>＋ Nuevo</span><span>Artefactos</span><span>Personalización</span><span>Más</span></div>
+              <div class="app-group"><span class="app-label">reconocedor-digitos <b class="pin">2</b></span><span class="app-sess on">Entrenar el modelo de dígitos</span><span class="app-sess">Web con lienzo para dibujar</span></div>
+              <div class="app-group"><span class="app-label">otro-proyecto</span><span class="app-sess">README del proyecto</span></div>
+              <div class="app-user">Tu nombre · Pro</div>
+            </aside>
+            <div class="app-main">
+              <div class="app-title">Entrenar el modelo de dígitos ⌄ <b class="pin">3</b></div>
+              <div class="app-chat">
+                <div class="app-msg me">Entrena el modelo con load_digits, pasa los tests y enséñame la precisión.</div>
+                <div class="app-msg">He creado <code>train.py</code> y los tests. Precisión en test: <b>96,9 %</b>. Los 3 tests pasan. <b class="pin">4</b></div>
+                <div class="app-card"><span>train.py</span><span class="diffstat"><span class="add">+92</span> <span class="del">−0</span></span></div>
+              </div>
+              <div class="app-input">
+                <div class="app-box"><span class="app-plus">＋</span><span class="muted">Escribe tu siguiente instrucción…</span><span>🎙</span><b class="pin">5</b></div>
+                <div class="app-under"><span><span class="app-chip">Auto ⌄</span> <b class="pin">6</b></span><span><span class="app-chip">Opus 5.5 · Extra ⌄</span> <span class="app-ring" aria-hidden="true"></span> <b class="pin">7</b></span></div>
+              </div>
+            </div>
+            <aside class="app-panel">
+              <div class="app-sect"><span class="app-label">Entorno <b class="pin">8</b></span><span>☁ Default</span><span>📁 reconocedor-digitos</span><span>⑂ claude/entrenar-modelo</span></div>
+              <div class="app-sect"><span class="app-label">Contexto <b class="pin">9</b></span><span class="app-meter"><i style="width:38%"></i></span><span class="muted">38 %</span></div>
+              <div class="app-sect"><span class="app-label">Resultados <b class="pin">10</b></span><span>train.py</span><span>tests/test_model.py</span><span>model.json</span></div>
+              <div class="app-sect"><span class="app-label">Cambios <b class="pin">11</b></span><span class="row" style="justify-content:space-between"><span class="diffstat"><span class="add">+214</span> <span class="del">−0</span></span><span class="ui-btn">Crear PR</span></span></div>
+            </aside>
+          </div>
+        </div>
+        <figcaption><b>Figura 3.</b> Recreación de la pestaña Code de la app de Claude en una sesión en la nube. Los números corresponden a la lista de abajo.</figcaption>
+      </figure>
+      <ol class="legend">
+        <li><span><b>Barra lateral.</b> <b>Nuevo</b> abre una sesión (<kbd>Ctrl</kbd>+<kbd>N</kbd>), <b>Buscar</b> encuentra conversaciones antiguas, <b>Artefactos</b> guarda las páginas que Claude publica y <b>Personalización</b> gestiona tus skills y conectores.</span></li>
+        <li><span><b>Sesiones agrupadas por repositorio.</b> Cada tarea es una sesión con su propia rama. El <b>＋</b> junto al repositorio abre otra sesión sobre él.</span></li>
+        <li><span><b>Título de la sesión.</b> Haz clic para renombrarla. El <b>⌄</b> abre el menú de la sesión, desde donde puedes, por ejemplo, editar su entorno.</span></li>
+        <li><span><b>Conversación.</b> Tus mensajes, lo que Claude hace y las tarjetas con los archivos cambiados. Pulsa una tarjeta para ver el detalle.</span></li>
+        <li><span><b>Cuadro de mensaje.</b> El <b>＋</b> adjunta archivos e imágenes (capturas de errores, diseños), muestra los comandos y activa conectores. El micrófono sirve para dictar.</span></li>
+        <li><span><b>Modo de permisos.</b> En la nube puedes elegir <b>Auto</b>, <b>Aceptar ediciones</b> o <b>Plan</b>. Lo explicamos en el bloque 4.</span></li>
+        <li><span><b>Modelo y nivel de esfuerzo.</b> Qué modelo trabaja y cuánto piensa antes de actuar. El anillo de al lado muestra cuánto contexto y cuánto uso de tu plan llevas. Lo vemos en la sección siguiente.</span></li>
+        <li><span><b>Entorno.</b> En qué entorno corre la sesión, qué repositorio tiene descargado y en qué <b>rama</b> está trabajando Claude.</span></li>
+        <li><span><b>Contexto.</b> Cuánto de la memoria de trabajo de esta conversación está ocupado. Si se llena mucho, abre una sesión nueva para la siguiente tarea.</span></li>
+        <li><span><b>Resultados.</b> Los artefactos y archivos que ha creado o modificado en esta sesión.</span></li>
+        <li><span><b>Cambios.</b> Líneas añadidas y quitadas respecto a la rama de partida. Ábrelo para ver el diff y comentar líneas concretas; <b>Crear PR</b> abre un pull request en GitHub.</span></li>
+      </ol>
+      <div class="note"><b>Atajos útiles en la app</b><kbd>Esc</kbd> para a Claude · <kbd>Ctrl</kbd>+<kbd>N</kbd> nueva sesión · <kbd>Ctrl</kbd>+<kbd>/</kbd> lista de atajos · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd> modo · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd> modelo · <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> esfuerzo · <kbd>Ctrl</kbd>+<kbd>;</kbd> pregunta aparte sin ensuciar la conversación. En Mac, <kbd>Cmd</kbd> en lugar de <kbd>Ctrl</kbd>.</div>
     </section>
 
-    <!-- 05 · PERMISOS -->
-    <section class="block" id="permisos">
+    <!-- 04 · MODELOS -->
+    <section class="block" id="modelos">
       <header>
-        <p class="eyebrow">Bloque 3 · Manejo <span>· 5 min</span></p>
-        <h2>Modos de permiso: cuánta libertad le das</h2>
-        <p class="goal">El modo decide qué puede hacer Claude sin pedirte confirmación. Lo cambias en cualquier momento con <kbd>Shift</kbd>+<kbd>Tab</kbd>.</p>
+        <p class="eyebrow">Bloque 2 · Interfaz y modelos <span>· 10 min</span></p>
+        <h2>Los modelos: cuál usar en cada momento</h2>
+        <p class="goal">El modelo es el "cerebro" que trabaja en la sesión. Lo cambias en el selector junto al botón de enviar. Todos los de la familia Claude 5 tienen una ventana de contexto de 1 millón de tokens.</p>
       </header>
-      <div class="modes" aria-label="Ciclo de modos con Shift+Tab">
-        <span class="m">Manual</span><span class="arr">→</span><span class="m">acceptEdits</span><span class="arr">→</span><span class="m on">plan</span><span class="arr">→</span><span class="m">auto</span><span class="arr">↺</span>
+      <div class="spectrum" aria-hidden="true">
+        <span>Más rápido y ligero</span><i></i><span>Más capaz</span>
+      </div>
+      <div class="models">
+        <div class="card model"><span class="tag">Rápido</span><h4>Haiku 5.5</h4><p>Rápido y eficiente para tareas sencillas: preguntas cortas, renombrar, explicar un error, pequeños cambios.</p><p class="use"><b>En clase:</b> dudas rápidas sin gastar mucho uso del plan.</p></div>
+        <div class="card model"><span class="tag">Día a día</span><h4>Sonnet 5.5</h4><p>Pensado para el trabajo diario de programación: equilibrio entre velocidad y calidad.</p><p class="use"><b>En clase:</b> la web, los tests, el README.</p></div>
+        <div class="card model hl"><span class="tag">Predeterminado</span><h4>Opus 5.5</h4><p>Para razonamiento complejo. Es el modelo que se usa por defecto en los planes Pro, Max, Team y Enterprise.</p><p class="use"><b>En clase:</b> planificar el proyecto y el entrenamiento del modelo.</p></div>
+        <div class="card model"><span class="tag">El más potente</span><h4>Fable 5.1</h4><p>Para las tareas más difíciles y largas. Nunca viene seleccionado por defecto: hay que elegirlo, si tu plan lo incluye.</p><p class="use"><b>En clase:</b> retos grandes, cuando los demás se atascan.</p></div>
+      </div>
+      <h3>El nivel de esfuerzo</h3>
+      <div class="prose">
+        <p>Junto al nombre del modelo aparece el <b>esfuerzo</b> (en la captura de la interfaz, <i>Extra</i>): cuánto piensa Claude antes de responder. A más esfuerzo, mejores resultados en problemas difíciles, pero tarda más y consume más uso del plan. Los niveles, de menos a más, son <code>low</code>, <code>medium</code>, <code>high</code>, <code>xhigh</code> y <code>max</code> (la app los muestra con nombres en español). Opus, Sonnet y Haiku 5.5 empiezan en <code>medium</code>.</p>
       </div>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Modo</th><th>Qué hace sin preguntar</th><th>Úsalo para</th></tr></thead>
+          <thead><tr><th>Situación</th><th>Modelo</th><th>Esfuerzo</th></tr></thead>
           <tbody>
-            <tr><td><b>Manual</b> (<code>default</code>)</td><td>Solo leer</td><td>Revisar cada acción; trabajo delicado</td></tr>
-            <tr><td><code>acceptEdits</code></td><td>Leer, editar archivos y comandos básicos de archivos (<code>mkdir</code>, <code>mv</code>…)</td><td>Iterar sobre código que estás revisando</td></tr>
-            <tr><td><code>plan</code></td><td>Leer y explorar; propone un plan sin tocar el código</td><td>Antes de cambios grandes o cuando no conoces el código</td></tr>
-            <tr><td><code>auto</code></td><td>Todo, con un segundo modelo que revisa y bloquea lo arriesgado</td><td>Tareas largas sin interrupciones constantes</td></tr>
-            <tr><td><code>dontAsk</code></td><td>Solo lo preaprobado; lo demás se rechaza</td><td>Scripts y CI cerrados</td></tr>
-            <tr><td><code>bypassPermissions</code></td><td>Todo, sin comprobaciones</td><td>Solo contenedores o máquinas virtuales aisladas</td></tr>
+            <tr><td>"¿Qué hace esta función?"</td><td>Haiku o Sonnet</td><td>Bajo o medio</td></tr>
+            <tr><td>Crear la web con el lienzo y las barras</td><td>Sonnet</td><td>Medio</td></tr>
+            <tr><td>Planificar el proyecto o encontrar por qué baja la precisión</td><td>Opus</td><td>Alto</td></tr>
+            <tr><td>Un fallo raro que ningún intento resuelve</td><td>Opus o Fable</td><td>Muy alto o máximo</td></tr>
           </tbody>
         </table>
       </div>
-      <figure>
-        <div class="win term">
-          <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span>~/reconocedor-digitos — claude</div>
-<pre class="term-body"><span class="b">&gt;</span> <span class="w">Quiero añadir una capa más a la red. ¿Qué archivos hay que cambiar?</span>
+      <div class="note"><b>Cómo cambiarlo</b>Con el selector junto al botón de enviar, con los atajos <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>I</kbd> (modelo) y <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>E</kbd> (esfuerzo), o escribiendo <code>/model sonnet</code> y <code>/effort high</code> en el cuadro de mensaje. Todo lo que hace Claude cuenta para los límites de uso de tu plan: el anillo junto al modelo te muestra cuánto llevas.</div>
+    </section>
 
-<span class="y">●</span> Read(train.py) · Read(index.html) · Read(tests/test_model.py)
-
-<span class="w">Plan</span>
-  1. train.py: hidden_layer_sizes=(64, 32) y exportar W3/b3 en model.json
-  2. index.html: predict() con una capa oculta más
-  3. tests/test_model.py: forward() con la nueva capa
-  4. Ejecutar python train.py y python -m pytest -q
-
-<span class="c">  ¿Aprobar el plan?  1. Sí   2. Sí, y aceptar ediciones   3. No, cambia…</span>
-
-<span class="c">  </span><span class="mode-pill y">⏸ plan mode on</span><span class="c"> (shift+tab para cambiar)</span>
-</pre>
-        </div>
-        <figcaption><b>Figura 7.</b> En modo plan, Claude investiga y propone. Con <kbd>Ctrl</kbd>+<kbd>G</kbd> abres el plan en tu editor para retocarlo antes de aprobarlo.</figcaption>
+    <!-- 05 · ENTORNO -->
+    <section class="block" id="entorno">
+      <header>
+        <p class="eyebrow">Bloque 3 · Entorno y GitHub <span>· 25 min</span></p>
+        <h2>Conectar Claude a GitHub con un entorno en la nube</h2>
+        <p class="goal">Un <b>entorno</b> es la configuración guardada del ordenador virtual donde trabaja Claude: qué red puede usar, qué variables tiene y qué se instala al arrancar. Cada sesión recibe una máquina nueva con tu repositorio descargado.</p>
+      </header>
+      <figure class="diagram" aria-label="Flujo de una sesión en la nube">
+        <svg viewBox="0 0 760 210" role="img" aria-labelledby="flow-title">
+          <title id="flow-title">Flujo: el repositorio de GitHub se clona en el entorno en la nube, Claude trabaja y sube una rama, tú creas un pull request y al fusionarlo en main se publica en GitHub Pages</title>
+          <defs>
+            <marker id="ah3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+          </defs>
+          <rect class="node" x="10" y="50" width="130" height="90" rx="12"/>
+          <text class="t1" x="75" y="84" text-anchor="middle">Repositorio</text>
+          <text class="t2" x="75" y="104" text-anchor="middle">GitHub, rama</text>
+          <text class="t2" x="75" y="120" text-anchor="middle">main</text>
+          <rect class="node hl" x="170" y="30" width="170" height="130" rx="12"/>
+          <text class="t1" x="255" y="62" text-anchor="middle">Entorno en la nube</text>
+          <text class="t2" x="255" y="84" text-anchor="middle">1. descarga el repo</text>
+          <text class="t2" x="255" y="102" text-anchor="middle">2. script de configuración</text>
+          <text class="t2" x="255" y="120" text-anchor="middle">3. Claude trabaja</text>
+          <text class="t2" x="255" y="138" text-anchor="middle">y ejecuta los tests</text>
+          <rect class="node" x="370" y="50" width="120" height="90" rx="12"/>
+          <text class="t1" x="430" y="84" text-anchor="middle">Rama</text>
+          <text class="t2" x="430" y="104" text-anchor="middle">claude/…</text>
+          <text class="t2" x="430" y="120" text-anchor="middle">en GitHub</text>
+          <rect class="node" x="520" y="50" width="110" height="90" rx="12"/>
+          <text class="t1" x="575" y="84" text-anchor="middle">Pull request</text>
+          <text class="t2" x="575" y="104" text-anchor="middle">tú revisas</text>
+          <text class="t2" x="575" y="120" text-anchor="middle">y fusionas</text>
+          <rect class="node" x="660" y="50" width="90" height="90" rx="12"/>
+          <text class="t1" x="705" y="84" text-anchor="middle">main</text>
+          <text class="t2" x="705" y="104" text-anchor="middle">→ GitHub</text>
+          <text class="t2" x="705" y="120" text-anchor="middle">Pages</text>
+          <path class="arrow" d="M140 95 H167" marker-end="url(#ah3)"/>
+          <path class="arrow" d="M340 95 H367" marker-end="url(#ah3)"/>
+          <path class="arrow" d="M490 95 H517" marker-end="url(#ah3)"/>
+          <path class="arrow" d="M630 95 H657" marker-end="url(#ah3)"/>
+          <text class="tl" x="380" y="192" text-anchor="middle">nada llega a main sin que tú apruebes el pull request</text>
+        </svg>
       </figure>
-      <div class="note"><b>Regla práctica</b>Si puedes describir el cambio en una frase, pídelo directamente. Si toca varios archivos o no tienes claro el enfoque, empieza en modo plan. Para ajustar permisos concretos (por ejemplo, permitir siempre <code>python -m pytest</code>) usa <code>/permissions</code>.</div>
+
+      <h3>Qué trae el entorno sin configurar nada</h3>
+      <div class="grid">
+        <div class="card"><span class="tag">Sistema</span><p>Una máquina virtual Ubuntu 24.04 nueva en cada sesión, con tu repositorio ya descargado.</p></div>
+        <div class="card"><span class="tag">Python</span><p>Python 3 con pip, uv, poetry, pytest, ruff, black y mypy. scikit-learn se instala con <code>pip</code> en segundos.</p></div>
+        <div class="card"><span class="tag">Más herramientas</span><p>Node.js 20–22, Java, Go, Rust, Docker, PostgreSQL, Redis, git y la CLI de GitHub.</p></div>
+      </div>
+
+      <h3>Crear o editar un entorno</h3>
+      <ol class="steps">
+        <li><div><h4>Abre el selector de entorno</h4><p>En la pantalla de nueva sesión, pulsa el primer control debajo del cuadro de mensaje (el de <b>☁ Default</b>). Para crear uno, elige <b>New environment</b>. Para editar uno, pasa el ratón por encima y pulsa el icono de ajustes que aparece a la derecha. En una sesión ya empezada: <b>⌄</b> junto al título → <b>Edit cloud environment</b>.</p></div></li>
+        <li><div><h4>Rellena el formulario</h4>
+          <figure>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">claude.ai/code · New environment</span></div>
+              <div class="page">
+                <div class="ui-box">
+                  <span class="muted" style="font-size:.82rem">Nombre</span>
+                  <span class="ui-input" style="color:var(--ink)">ml-clase</span>
+                  <span class="muted" style="font-size:.82rem">Acceso a red</span>
+                  <div class="row"><span class="ui-radio">None</span><span class="ui-radio on callout-mark">Trusted</span><span class="ui-radio">Full</span><span class="ui-radio">Custom</span></div>
+                  <span class="muted" style="font-size:.82rem">Variables de entorno (formato .env, visibles para quien use el entorno)</span>
+                  <span class="ui-input" style="font-family:var(--mono);color:var(--ink)">PYTHONHASHSEED=42</span>
+                  <span class="muted" style="font-size:.82rem">Script de configuración (se ejecuta al empezar cada sesión)</span>
+                  <span class="ui-input" style="font-family:var(--mono);color:var(--ink);white-space:pre">#!/bin/bash
+pip install scikit-learn numpy pytest</span>
+                  <div class="row" style="justify-content:flex-end"><span class="ui-btn blue">Add environment</span></div>
+                </div>
+              </div>
+            </div>
+            <figcaption><b>Figura 4.</b> Esquema del formulario de entorno con valores para el proyecto de ML. Si el entorno <b>Default</b> te sirve, no necesitas crear otro.</figcaption>
+          </figure>
+        </div></li>
+      </ol>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Acceso a red</th><th>Qué permite</th><th>Cuándo usarlo</th></tr></thead>
+          <tbody>
+            <tr><td><b>None</b></td><td>Sin salida a internet (salvo la propia comunicación con Claude)</td><td>Código sensible que no necesita descargar nada</td></tr>
+            <tr><td><b>Trusted</b></td><td>Solo dominios de confianza: PyPI, npm, GitHub y servicios en la nube habituales</td><td><b>Casi siempre.</b> Es el que usa Default y el que recomendamos en clase</td></tr>
+            <tr><td><b>Full</b></td><td>Cualquier dominio</td><td>Solo si la tarea necesita descargar de sitios fuera de la lista</td></tr>
+            <tr><td><b>Custom</b></td><td>Tu propia lista de dominios (puede incluir la de Trusted)</td><td>Cuando necesitas uno o dos dominios concretos más</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="grid two">
+        <div class="card"><h4>Script de configuración</h4><p>Un script de Bash que prepara la máquina antes de que Claude empiece: instalar librerías o herramientas que no vienen de serie. Debe tardar menos de unos 5 minutos; entonces el entorno se guarda en caché y las siguientes sesiones arrancan ya preparadas (la caché dura unos 7 días o hasta que cambies el script).</p></div>
+        <div class="card"><h4>Variables de entorno</h4><p>Una por línea, en formato <code>CLAVE=valor</code>. <b>No pongas contraseñas ni claves de API</b>: cualquiera que use el entorno puede leerlas. Para claves, el entorno tiene un apartado de secretos de red que Claude usa sin verlos.</p></div>
+      </div>
+
+      <h3>Qué lee Claude de tu repositorio en la nube</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Archivo del repositorio</th><th>¿Se usa en la nube?</th></tr></thead>
+          <tbody>
+            <tr><td><code>CLAUDE.md</code></td><td>Sí, siempre</td></tr>
+            <tr><td><code>.claude/skills/</code>, <code>.claude/agents/</code></td><td>Sí</td></tr>
+            <tr><td><code>.claude/settings.json</code> (permisos y hooks)</td><td>Sí, en sesiones con un solo repositorio</td></tr>
+            <tr><td><code>.mcp.json</code> (servidores MCP del proyecto)</td><td>Sí, en sesiones con un solo repositorio</td></tr>
+            <tr><td>Skills activadas en tu cuenta (Personalización)</td><td>Sí, se cargan solas</td></tr>
+            <tr><td>Archivos de configuración de tu ordenador</td><td>No: la nube solo ve lo que está en el repositorio</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>De la rama al pull request</h3>
+      <ol class="steps">
+        <li><div><h4>Claude sube una rama</h4><p>Al terminar, Claude sube sus cambios a una rama <code>claude/…</code> de tu repositorio. Tu rama <code>main</code> no se toca.</p></div></li>
+        <li><div><h4>Revisa los cambios</h4>
+          <figure>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">Cambios · claude/entrenar-modelo</span></div>
+              <div class="page">
+                <div class="row" style="justify-content:space-between"><b>3 archivos cambiados</b><span class="row"><span class="diffstat"><span class="add">+214</span> <span class="del">−0</span></span><span class="ui-btn go callout-mark">Crear PR</span></span></div>
+                <div class="ui-side" style="grid-template-columns:160px minmax(0,1fr)">
+                  <div class="ui-nav"><div class="on">train.py</div><div>tests/test_model.py</div><div>requirements.txt</div></div>
+                  <div class="ui-panel" style="font-family:var(--mono);font-size:.8rem">
+                    <span style="color:var(--good)">+ x_train, y_train = augment(x_train, y_train)</span>
+                    <div class="comment"><div>Tu comentario en la línea 63</div><div style="font-family:var(--body)">Explica en un comentario por qué solo aumentamos el train.</div></div>
+                    <span style="color:var(--good)">+ model = MLPClassifier(hidden_layer_sizes=(64,))</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <figcaption><b>Figura 5.</b> En <b>Cambios</b> ves el diff archivo por archivo. Haz clic en una línea para comentarla: los comentarios se envían a Claude con tu siguiente mensaje.</figcaption>
+          </figure>
+        </div></li>
+        <li><div><h4>Crea el pull request y fusiónalo</h4><p><b>Crear PR</b> lo abre en GitHub (completo o como borrador). Allí lo revisas por última vez y pulsas <b>Merge pull request</b>. La sesión sigue viva: si GitHub Actions falla o alguien comenta, pega el error y pide que lo arregle, o activa <b>Auto-fix</b> en la barra de CI para que lo haga solo.</p></div></li>
+      </ol>
+      <div class="note"><b>Una sesión por tarea</b>Cada sesión trabaja en su propia rama, así que puedes lanzar varias a la vez (por ejemplo, tres experimentos con distintos tamaños de red) sin que se pisen.</div>
+    </section>
+
+    <!-- 06 · CONTROLES -->
+    <section class="block" id="controles">
+      <header>
+        <p class="eyebrow">Bloque 4 · Prompts y control <span>· 10 min</span></p>
+        <h2>Modos de permiso y comandos</h2>
+        <p class="goal">El modo decide cuánto puede hacer Claude sin pararse a preguntarte. Lo eliges abajo a la izquierda del cuadro de mensaje (<kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>M</kbd>).</p>
+      </header>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Modo</th><th>Qué hace</th><th>Úsalo para</th></tr></thead>
+          <tbody>
+            <tr><td><b>Plan</b></td><td>Investiga el repositorio y te propone un plan. No edita nada hasta que lo apruebas</td><td>Empezar un proyecto, cambios grandes o código que no conoces</td></tr>
+            <tr><td><b>Aceptar ediciones</b></td><td>Edita archivos y sube la rama sin pararse a pedir aprobación</td><td>Tareas claras que vas a revisar en el diff</td></tr>
+            <tr><td><b>Auto</b></td><td>Trabaja sin interrupciones; un segundo modelo revisa cada acción y bloquea lo arriesgado</td><td>Tareas largas y rutinarias</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><b>Regla práctica</b>Si puedes describir el cambio en una frase, pídelo directamente. Si toca varios archivos o no tienes claro el enfoque, empieza en <b>Plan</b>. En cualquier momento puedes parar a Claude con <kbd>Esc</kbd> o con el botón de parar y corregir el rumbo.</div>
+      <h3>Lo que puedes escribir en el cuadro de mensaje</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Escribe</th><th>Qué hace</th></tr></thead>
+          <tbody>
+            <tr><td><code>/init</code></td><td>Analiza el repositorio y crea un <code>CLAUDE.md</code> (bloque 5)</td></tr>
+            <tr><td><code>/model sonnet</code>, <code>/effort high</code></td><td>Cambia el modelo o el esfuerzo</td></tr>
+            <tr><td><code>/context</code></td><td>Muestra qué ocupa la memoria de trabajo</td></tr>
+            <tr><td><code>/compact</code></td><td>Resume la conversación para liberar espacio y seguir</td></tr>
+            <tr><td><code>/btw ¿…?</code></td><td>Pregunta aparte cuya respuesta no entra en la conversación</td></tr>
+            <tr><td><code>/code-review</code></td><td>Revisa los cambios de la sesión buscando errores</td></tr>
+            <tr><td><code>/nombre-de-skill</code></td><td>Ejecuta una de tus skills (bloque 5)</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted" style="max-width:70ch">Para empezar de cero con una tarea distinta, no hace falta un comando: abre una sesión nueva con <b>Nuevo</b>. Para enseñar un error o un diseño, adjunta la captura con el <b>＋</b> o arrástrala al cuadro de mensaje.</p>
     </section>
 
     <!-- 06 · PROMPTS -->
     <section class="block" id="prompts">
       <header>
-        <p class="eyebrow">Bloque 4 · Prompts <span>· 25 min</span></p>
+        <p class="eyebrow">Bloque 4 · Prompts y control <span>· 15 min</span></p>
         <h2>Cómo escribir prompts que funcionan</h2>
         <p class="goal">Claude puede deducir mucho, pero no leer tu mente. Cuanto más preciso el encargo, menos correcciones. Y lo más importante: dale una forma de comprobar su trabajo.</p>
       </header>
       <h3>Las cinco piezas de un buen prompt</h3>
       <div class="grid five">
-        <div class="card"><span class="tag">1 · Contexto</span><p>Qué es el proyecto y qué archivos importan. Menciónalos con <code>@</code>.</p></div>
+        <div class="card"><span class="tag">1 · Contexto</span><p>Qué es el proyecto y qué archivos importan. Nómbralos con su ruta: <code>train.py</code>.</p></div>
         <div class="card"><span class="tag">2 · Objetivo</span><p>Qué quieres conseguir, concreto y medible. Un objetivo por prompt.</p></div>
         <div class="card"><span class="tag">3 · Restricciones</span><p>Librerías permitidas, qué no tocar, estilo, límites de tamaño.</p></div>
         <div class="card"><span class="tag">4 · Verificación</span><p>Cómo sabrá que ha terminado: tests, un comando, una captura, una métrica.</p></div>
@@ -927,15 +950,15 @@ claude update                       <span class="c"># actualiza a la última ver
       <h3>Antes y después</h3>
       <div class="compare">
         <div class="bad"><b>Vago</b><p>haz un modelo para los dígitos</p><small>No dice datos, modelo, métrica ni cómo comprobarlo.</small></div>
-        <div class="good"><b>Preciso</b><p>En @train.py entrena un MLP de scikit-learn con load_digits. Separa train/test 80/20 con stratify y semilla 42 antes de aumentar datos. Imprime precisión y matriz de confusión. Ejecuta python -m pytest -q y no termines hasta que pase.</p><small>Contexto, objetivo, restricciones y verificación.</small></div>
+        <div class="good"><b>Preciso</b><p>En train.py entrena un MLP de scikit-learn con load_digits. Separa train/test 80/20 con stratify y semilla 42 antes de aumentar datos. Imprime precisión y matriz de confusión. Ejecuta python -m pytest -q y no termines hasta que pase.</p><small>Contexto, objetivo, restricciones y verificación.</small></div>
       </div>
       <div class="compare">
         <div class="bad"><b>Vago</b><p>la web no funciona, arréglala</p><small>Claude tiene que adivinar qué falla.</small></div>
-        <div class="good"><b>Preciso</b><p>Al abrir index.html desde GitHub Pages sale este error en consola: [pega el error o la captura]. Encuentra la causa en @index.html, arréglala sin silenciar el error y explícame por qué pasaba.</p><small>Síntoma, ubicación probable y qué significa "arreglado".</small></div>
+        <div class="good"><b>Preciso</b><p>Al abrir index.html desde GitHub Pages sale este error en consola: [pega el error o la captura]. Encuentra la causa en index.html, arréglala sin silenciar el error y explícame por qué pasaba.</p><small>Síntoma, ubicación probable y qué significa "arreglado".</small></div>
       </div>
       <div class="compare">
         <div class="bad"><b>Vago</b><p>mejora el diseño</p><small>"Mejor" no se puede comprobar.</small></div>
-        <div class="good"><b>Preciso</b><p>[pega una captura del diseño que te gusta] Adapta @index.html a este estilo: lienzo a la izquierda, barras de probabilidad a la derecha, que se vea bien en un móvil de 400 px. Haz una captura del resultado, compárala con la original y corrige las diferencias.</p><small>Referencia visual y comprobación visual.</small></div>
+        <div class="good"><b>Preciso</b><p>[pega una captura del diseño que te gusta] Adapta index.html a este estilo: lienzo a la izquierda, barras de probabilidad a la derecha, que se vea bien en un móvil de 400 px. Haz una captura del resultado, compárala con la original y corrige las diferencias.</p><small>Referencia visual y comprobación visual.</small></div>
       </div>
       <div class="compare">
         <div class="bad"><b>Vago</b><p>añade tests</p><small>¿De qué? ¿Qué casos?</small></div>
@@ -946,14 +969,14 @@ claude update                       <span class="c"># actualiza a la última ver
       <p class="muted" style="max-width:70ch">Rellena las piezas y copia el resultado. Está precargado con un ejemplo del proyecto; cámbialo por el tuyo.</p>
       <div class="builder" id="builder">
         <div class="fields">
-          <label for="pb-ctx">Contexto <small>qué es el proyecto, archivos con @</small>
-            <textarea id="pb-ctx" rows="3">Proyecto de reconocimiento de dígitos que se publica en GitHub Pages. El modelo está en @train.py y la web en @index.html.</textarea></label>
+          <label for="pb-ctx">Contexto <small>qué es el proyecto y qué archivos importan</small>
+            <textarea id="pb-ctx" rows="3">Proyecto de reconocimiento de dígitos que se publica en GitHub Pages. El modelo está en train.py y la web en index.html.</textarea></label>
           <label for="pb-goal">Objetivo <small>una sola cosa, concreta</small>
             <textarea id="pb-goal" rows="2">Añade a la web una tabla con la matriz de confusión del conjunto de test.</textarea></label>
           <label for="pb-rules">Restricciones <small>qué no hacer, librerías, estilo</small>
             <textarea id="pb-rules" rows="3">Sin librerías nuevas. Guarda la matriz en model.json desde train.py. No cambies el reparto train/test.</textarea></label>
           <label for="pb-check">Verificación <small>cómo sabrá que ha terminado</small>
-            <textarea id="pb-check" rows="3">Ejecuta python train.py y python -m pytest -q. Sirve la web con python -m http.server y comprueba que la tabla aparece.</textarea></label>
+            <textarea id="pb-check" rows="3">Ejecuta python train.py y python -m pytest -q, y comprueba que la matriz guardada en model.json suma 360 imágenes.</textarea></label>
           <label for="pb-out">Entrega <small>qué quieres al final</small>
             <input id="pb-out" value="Haz commit con un mensaje descriptivo y resume los cambios en 3 líneas.">
           </label>
@@ -962,7 +985,7 @@ claude update                       <span class="c"># actualiza a la última ver
           <div class="score"><span class="muted" style="font-size:.85rem">Calidad</span><div class="meter"><div id="pb-meter"></div></div><b id="pb-score">0/6</b></div>
           <ul class="checks" id="pb-checks">
             <li data-k="ctx">Da contexto del proyecto</li>
-            <li data-k="at">Menciona archivos con @</li>
+            <li data-k="at">Nombra archivos concretos (train.py…)</li>
             <li data-k="goal">Objetivo concreto (más de 6 palabras)</li>
             <li data-k="rules">Incluye restricciones</li>
             <li data-k="check">Dice cómo verificar (test, ejecuta, comprueba…)</li>
@@ -972,22 +995,22 @@ claude update                       <span class="c"># actualiza a la última ver
         </div>
       </div>
 
-      <h3>El flujo que mejor funciona: explorar → planificar → programar → commit</h3>
+      <h3>El flujo que mejor funciona: explorar → planificar → programar → revisar</h3>
       <ol class="steps">
-        <li><div><h4>Explorar (modo plan)</h4><div class="code prompt"><pre>lee @train.py y @index.html y explícame cómo pasa el dibujo del lienzo al modelo. no cambies nada.</pre></div></div></li>
+        <li><div><h4>Explorar (modo Plan)</h4><div class="code prompt"><pre>lee train.py e index.html y explícame cómo pasa el dibujo del lienzo al modelo. no cambies nada.</pre></div></div></li>
         <li><div><h4>Planificar</h4><div class="code prompt"><pre>quiero que la web muestre también los 3 dígitos más probables. ¿qué archivos cambian? escribe un plan.</pre></div></div></li>
-        <li><div><h4>Programar y verificar</h4><div class="code prompt"><pre>implementa el plan. después ejecuta los tests, sirve la web y comprueba que funciona con un "4" dibujado.</pre></div></div></li>
-        <li><div><h4>Commit</h4><div class="code prompt"><pre>haz commit con un mensaje que explique el porqué y abre un PR</pre></div></div></li>
+        <li><div><h4>Programar y verificar</h4><div class="code prompt"><pre>implementa el plan. después ejecuta los tests y comprueba con Node que predict() devuelve los mismos 3 dígitos que Python para 10 imágenes de test.</pre></div></div></li>
+        <li><div><h4>Revisar y crear el PR</h4><p>Abre <b>Cambios</b>, revisa el diff, comenta lo que quieras ajustar y pulsa <b>Crear PR</b>.</p></div></li>
       </ol>
 
       <h3>Técnicas avanzadas de prompting</h3>
       <div class="grid two">
-        <div class="card"><h4>Que Claude te entreviste</h4><p>Para proyectos grandes: <code>Quiero construir [idea]. Entrevístame en detalle con la herramienta AskUserQuestion sobre implementación, interfaz, casos límite y compromisos. Al terminar, escribe la especificación en SPEC.md.</code> Luego <code>/clear</code> y una sesión nueva implementa la especificación.</p></div>
+        <div class="card"><h4>Que Claude te entreviste</h4><p>Para proyectos grandes: <code>Quiero construir [idea]. Entrevístame en detalle con la herramienta AskUserQuestion sobre implementación, interfaz, casos límite y compromisos. Al terminar, escribe la especificación en SPEC.md.</code> Luego abre una sesión nueva que implemente la especificación.</p></div>
         <div class="card"><h4>Investigar con subagentes</h4><p><code>Usa subagentes para investigar qué opciones hay para ejecutar un modelo de scikit-learn en el navegador y compáralas.</code> La investigación ocurre en otro contexto y tu conversación queda limpia.</p></div>
-        <div class="card"><h4>Escritor y revisor</h4><p>Una sesión implementa; otra, con contexto limpio, revisa: <code>Revisa @train.py buscando fugas de datos y errores en la métrica.</code> Una mirada fresca no está sesgada por el código que acaba de escribir.</p></div>
-        <div class="card"><h4>Pide pruebas, no promesas</h4><p><code>Enséñame la salida de los tests</code>, <code>haz una captura</code>, <code>muéstrame el comando que ejecutaste</code>. Revisar evidencias es más rápido que repetirlo tú.</p></div>
-        <div class="card"><h4>Contenido rico</h4><p>Pega capturas con <kbd>Ctrl</kbd>+<kbd>V</kbd>, menciona archivos con <code>@</code>, pasa URLs de documentación o canaliza datos: <code>cat resultados.csv | claude -p "¿qué modelo rindió mejor?"</code>.</p></div>
-        <div class="card"><h4>Corrige pronto y limpia</h4><p><kbd>Esc</kbd> en cuanto se desvíe. Si le has corregido dos veces lo mismo, el contexto está contaminado: <code>/clear</code> y un prompt mejor con lo aprendido.</p></div>
+        <div class="card"><h4>Escritor y revisor</h4><p>Una sesión implementa; otra, con contexto limpio, revisa: <code>Revisa train.py buscando fugas de datos y errores en la métrica.</code> Una mirada fresca no está sesgada por el código que acaba de escribir.</p></div>
+        <div class="card"><h4>Pide pruebas, no promesas</h4><p><code>Enséñame la salida de los tests</code>, <code>enséñame la matriz de confusión</code>, <code>muéstrame el comando que ejecutaste</code>. Revisar evidencias es más rápido que repetirlo tú.</p></div>
+        <div class="card"><h4>Contenido rico</h4><p>Adjunta capturas de errores o diseños con el <b>＋</b> (o arrástralas), pega mensajes de error completos y pasa enlaces a documentación: <code>lee https://scikit-learn.org/… y aplica esa idea</code>.</p></div>
+        <div class="card"><h4>Corrige pronto y limpia</h4><p><kbd>Esc</kbd> en cuanto se desvíe. Si le has corregido dos veces lo mismo, el contexto está contaminado: abre una sesión nueva con un prompt mejor que incluya lo aprendido.</p></div>
       </div>
     </section>
 
@@ -1000,12 +1023,11 @@ claude update                       <span class="c"># actualiza a la última ver
       </header>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Archivo</th><th>Alcance</th><th>¿Se sube a git?</th></tr></thead>
+          <thead><tr><th>Archivo</th><th>Para qué</th></tr></thead>
           <tbody>
-            <tr><td><code>./CLAUDE.md</code> o <code>./.claude/CLAUDE.md</code></td><td>Todo el equipo en este proyecto</td><td>Sí</td></tr>
-            <tr><td><code>./CLAUDE.local.md</code></td><td>Solo tú, en este proyecto</td><td>No (añádelo a <code>.gitignore</code>)</td></tr>
-            <tr><td><code>~/.claude/CLAUDE.md</code></td><td>Solo tú, en todos tus proyectos</td><td>No</td></tr>
-            <tr><td><code>.claude/rules/*.md</code></td><td>Reglas por temas; pueden aplicarse solo a ciertas rutas</td><td>Sí</td></tr>
+            <tr><td><code>CLAUDE.md</code> en la raíz del repositorio</td><td>Instrucciones del proyecto para todas las sesiones y para todo el equipo</td></tr>
+            <tr><td><code>CLAUDE.md</code> dentro de una carpeta</td><td>Instrucciones que solo aplican cuando Claude trabaja en esa carpeta</td></tr>
+            <tr><td><code>.claude/rules/*.md</code></td><td>Reglas por temas (tests, estilo…), que pueden aplicarse solo a ciertas rutas</td></tr>
           </tbody>
         </table>
       </div>
@@ -1018,7 +1040,6 @@ Demo de ML que se publica en GitHub Pages.
 - Instalar: `pip install -r requirements.txt`
 - Entrenar: `python train.py` (escribe model.json)
 - Tests: `python -m pytest -q`
-- Web en local: `python -m http.server 8000`
 
 ## Reglas
 - index.html es estático: sin frameworks ni servidor.
@@ -1037,7 +1058,7 @@ Demo de ML que se publica en GitHub Pages.
             <li><b>No:</b> lo que se deduce leyendo el código, tutoriales largos, información que cambia cada semana, "escribe código limpio".</li>
             <li>Pregúntate por cada línea: <i>¿si la borro, Claude cometería errores?</i> Si no, bórrala. Un CLAUDE.md largo hace que se ignoren las reglas importantes.</li>
             <li>Puedes importar otros archivos con <code>@docs/arquitectura.md</code>.</li>
-            <li><code>/memory</code> abre tus archivos de memoria y gestiona la <b>auto memoria</b>: notas que Claude guarda solo a partir de tus correcciones.</li>
+            <li>Para empezar rápido, escribe <code>/init</code>: Claude analiza el repositorio y propone un <code>CLAUDE.md</code>. Después edítalo tú.</li>
           </ul>
         </div>
       </div>
@@ -1058,23 +1079,19 @@ Demo de ML que se publica en GitHub Pages.
       </div>
       <p class="muted" style="max-width:70ch">Por eso la <b>descripción</b> es lo más importante: debe decir qué hace la skill y <i>cuándo</i> usarla, porque es lo único que Claude ve para decidir.</p>
 
-      <h3>Dónde se guardan</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Alcance</th><th>Ruta</th><th>Se invoca como</th></tr></thead>
-          <tbody>
-            <tr><td>Personal (todos tus proyectos)</td><td><code>~/.claude/skills/&lt;nombre&gt;/SKILL.md</code></td><td><code>/nombre</code></td></tr>
-            <tr><td>Proyecto (todo el equipo, en git)</td><td><code>.claude/skills/&lt;nombre&gt;/SKILL.md</code></td><td><code>/nombre</code></td></tr>
-            <tr><td>Plugin</td><td><code>&lt;plugin&gt;/skills/&lt;nombre&gt;/SKILL.md</code></td><td><code>/plugin:nombre</code></td></tr>
-          </tbody>
-        </table>
+      <h3>Las dos formas de tener skills en la nube</h3>
+      <div class="grid two">
+        <div class="card"><span class="tag">En el repositorio</span><h4><code>.claude/skills/&lt;nombre&gt;/SKILL.md</code></h4><p>Viaja con el proyecto: la tiene cualquier sesión sobre ese repositorio y cualquier compañero que lo use. Es la que usaremos en el proyecto.</p></div>
+        <div class="card"><span class="tag">En tu cuenta</span><h4>Barra lateral → Personalización</h4><p>Skills activadas en tu cuenta de Claude. Se cargan solas en todas tus sesiones en la nube, sea cual sea el repositorio. Allí puedes activar skills ya disponibles y subir las tuyas.</p></div>
       </div>
-      <p class="muted" style="max-width:70ch">Los antiguos comandos personalizados (<code>.claude/commands/deploy.md</code>) siguen funcionando: ahora son lo mismo que una skill.</p>
 
-      <h3>Crea tu primera skill, paso a paso</h3>
+      <h3>Crea tu primera skill en el repositorio</h3>
       <ol class="steps">
-        <li><div><h4>Crea la carpeta</h4><div class="code"><pre>mkdir -p .claude/skills/entrenar-modelo</pre></div></div></li>
-        <li><div><h4>Escribe <code>SKILL.md</code>: cabecera YAML + instrucciones</h4>
+        <li><div><h4>Pídele a Claude que la cree</h4><div class="code prompt"><pre>Crea la skill de proyecto .claude/skills/entrenar-modelo. Debe reentrenar el modelo,
+pasar los tests y comparar en una tabla la precisión y el tamaño de model.json antes y
+después. Que solo se ejecute cuando yo la llame, y que reciba como argumento el cambio
+a probar.</pre></div></div></li>
+        <li><div><h4>Revisa el <code>SKILL.md</code> que ha escrito</h4>
           <div class="code has-label"><span class="label">.claude/skills/entrenar-modelo/SKILL.md</span><pre>---
 name: entrenar-modelo
 description: Reentrena el reconocedor de dígitos, compara la precisión con la
@@ -1094,30 +1111,20 @@ Cambio pedido: $ARGUMENTS
 4. Si cambió la arquitectura, actualiza predict() en index.html.
 5. Termina con una tabla: precisión antes/después, tamaño de model.json
    y dígitos que más se confunden. Si empeora, propón deshacer.</pre></div>
+          <p class="muted">Es tu procedimiento: léelo y corrige lo que no te convenza. Lo que va entre <code>---</code> es la cabecera; debajo, las instrucciones.</p>
         </div></li>
-        <li><div><h4>Compruébala y úsala</h4>
-          <figure>
-            <div class="win term">
-              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span>~/reconocedor-digitos — claude</div>
-<pre class="term-body"><span class="b">&gt;</span> <span class="w">/skills</span>
-  <span class="w">Skills</span>  <span class="c">(escribe para filtrar · t ordena por tokens)</span>
-  <span class="g">●</span> entrenar-modelo     <span class="c">proyecto · Reentrena el reconocedor de dígitos…</span>
-  <span class="g">●</span> convenciones-ml     <span class="c">proyecto · Buenas prácticas de ML…</span>
-  <span class="g">●</span> code-review         <span class="c">incluida · Revisa el diff buscando errores…</span>
-
-<span class="b">&gt;</span> <span class="w">/entrenar-modelo prueba una capa oculta de 128 neuronas</span>
-<span class="y">●</span> Bash(python train.py)
-  <span class="c">⎿</span> Precisión en test: 0.9750 (360 imágenes)
-<span class="y">●</span> Bash(python -m pytest -q)
-  <span class="c">⎿</span> <span class="g">3 passed</span>
-
-  |                   | Antes   | Después |
-  | Precisión en test | 0.9694  | 0.9750  |
-  | Tamaño model.json | 35 KB   | 69 KB   |
-</pre>
-            </div>
-            <figcaption><b>Figura 8.</b> <code>/skills</code> lista las skills disponibles. Las cifras son reales con semilla 42; las tuyas pueden variar un poco.</figcaption>
-          </figure>
+        <li><div><h4>Úsala</h4>
+          <div class="code prompt"><pre>/entrenar-modelo prueba una capa oculta de 128 neuronas</pre></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th></th><th>Antes</th><th>Después</th></tr></thead>
+              <tbody>
+                <tr><td>Precisión en test</td><td>96,9 %</td><td>97,5 %</td></tr>
+                <tr><td>Tamaño de model.json</td><td>35 KB</td><td>69 KB</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="muted">Resultado real de este experimento con semilla 42. El tuyo puede variar un poco.</p>
         </div></li>
       </ol>
 
@@ -1129,67 +1136,57 @@ Cambio pedido: $ARGUMENTS
             <tr><td><code>name</code></td><td>Nombre y comando (<code>/name</code>)</td></tr>
             <tr><td><code>description</code></td><td>Qué hace y cuándo usarla. Claude decide con esto si la activa</td></tr>
             <tr><td><code>disable-model-invocation: true</code></td><td>Solo se ejecuta si tú la llamas. Úsalo en skills con efectos (desplegar, commits)</td></tr>
-            <tr><td><code>user-invocable: false</code></td><td>La oculta del menú <code>/</code>: solo Claude la usa como conocimiento</td></tr>
             <tr><td><code>allowed-tools</code></td><td>Herramientas que puede usar sin pedir permiso mientras la skill está activa</td></tr>
-            <tr><td><code>argument-hint</code>, <code>$ARGUMENTS</code>, <code>$0</code></td><td>Recibir argumentos: <code>/entrenar-modelo capa de 128</code></td></tr>
+            <tr><td><code>argument-hint</code>, <code>$ARGUMENTS</code></td><td>Recibir argumentos: <code>/entrenar-modelo capa de 128</code></td></tr>
             <tr><td><code>context: fork</code></td><td>Ejecuta la skill en un subagente con su propio contexto</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="note"><b>Truco: pídele que la escriba</b><code>Crea una skill de proyecto en .claude/skills/publicar-web que compruebe que index.html y model.json existen, pase los tests y haga push a main. Que solo se ejecute cuando yo la llame.</code> Después revísala: es tu procedimiento, tiene que estar bien.</div>
 
-      <h3>Cómo buscar e instalar skills hechas por otros</h3>
-      <p class="muted" style="max-width:70ch">Las skills se distribuyen dentro de <b>plugins</b>, que se publican en <b>marketplaces</b> (catálogos, normalmente un repositorio de GitHub). El marketplace oficial de Anthropic, <code>claude-plugins-official</code>, viene ya añadido.</p>
+      <h3>Dónde encontrar skills hechas</h3>
       <ol class="steps">
-        <li><div><h4>Explora con <code>/plugin</code></h4>
+        <li><div><h4>En la app: Personalización</h4>
           <figure>
-            <div class="win term">
-              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span>claude — /plugin</div>
-<pre class="term-body">  <span class="mode-pill w">Discover</span>   Installed   Marketplaces   Errors
-  <span class="c">Buscar:</span> <span class="w">commit</span>
-
-  <span class="b">❯</span> <span class="w">commit-commands</span>     <span class="c">claude-plugins-official · comandos para commit, push y PR</span>
-    code-review         <span class="c">claude-plugins-official · revisión de PR con varios agentes</span>
-    …
-
-  <span class="c">Enter: ver detalles (qué instala y cuánto contexto ocupa) · Tab: cambiar pestaña</span>
-</pre>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">Personalización · Skills</span></div>
+              <div class="page">
+                <div class="ui-side">
+                  <div class="ui-nav"><div>Conectores</div><div class="on">Skills</div><div>Plugins</div></div>
+                  <div class="ui-panel">
+                    <div class="row" style="justify-content:space-between"><h5>Skills</h5><span class="ui-btn callout-mark">Subir skill</span></div>
+                    <div class="ui-box">
+                      <div class="row" style="justify-content:space-between"><span><b>skill-creator</b> <span class="muted">· ayuda a crear y mejorar skills</span></span><span class="badge ok">Activada</span></div>
+                      <div class="row" style="justify-content:space-between"><span><b>pdf</b> <span class="muted">· leer y crear PDF</span></span><span class="badge">Desactivada</span></div>
+                      <div class="row" style="justify-content:space-between"><span><b>convenciones-ml</b> <span class="muted">· tuya</span></span><span class="badge ok">Activada</span></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <figcaption><b>Figura 9.</b> La pestaña <b>Discover</b> lista los plugins de tus marketplaces. Antes de instalar, el detalle muestra qué skills, agentes, hooks o servidores MCP añade.</figcaption>
+            <figcaption><b>Figura 6.</b> Esquema de <b>Personalización</b> en la barra lateral. Las skills activadas aquí se cargan solas en tus sesiones en la nube. Al subir una skill propia, la cabecera solo admite <code>name</code>, <code>description</code>, <code>license</code>, <code>compatibility</code>, <code>metadata</code> y <code>allowed-tools</code>; las que lleven más campos, guárdalas en el repositorio.</figcaption>
           </figure>
         </div></li>
-        <li><div><h4>Instala eligiendo el alcance</h4>
-          <div class="code"><pre><span class="c"># Desde el marketplace oficial</span>
-/plugin install commit-commands@claude-plugins-official
-
-<span class="c"># Añadir otro marketplace: las skills de ejemplo de Anthropic</span>
-/plugin marketplace add anthropics/skills
-/plugin install document-skills@anthropic-agent-skills
-/plugin install example-skills@anthropic-agent-skills
-
-<span class="c"># Lo mismo desde la terminal, sin abrir sesión</span>
-claude plugin install commit-commands@claude-plugins-official --scope project</pre></div>
-          <p class="muted">Alcances: <b>usuario</b> (tú, en todos los proyectos), <b>proyecto</b> (todo el equipo, queda en <code>.claude/settings.json</code>) o <b>local</b> (tú, solo en este repo). También puedes navegar el catálogo web en <a href="https://claude.com/marketplace">claude.com/marketplace</a>.</p>
-        </div></li>
-        <li><div><h4>Mantén el contexto limpio</h4>
-          <p><code>/skills</code> (pulsa <kbd>t</kbd> para ordenar por tokens) y <code>/skill-doctor</code> muestran cuánto ocupa cada skill y cuánto la usas. Desactiva lo que no uses. Si creas una carpeta de skills con la sesión abierta, ejecuta <code>/reload-skills</code>.</p>
+        <li><div><h4>En GitHub: el repositorio de ejemplos de Anthropic</h4>
+          <p><a href="https://github.com/anthropics/skills">github.com/anthropics/skills</a> tiene skills de ejemplo (documentos, pruebas de webs, creación de skills…). Para usar una en tu proyecto, pídeselo a Claude:</p>
+          <div class="code prompt"><pre>Copia la skill skill-creator de github.com/anthropics/skills a .claude/skills/ de este
+repositorio y explícame qué hace cada archivo.</pre></div>
         </div></li>
       </ol>
-      <div class="note warn"><b>Lee antes de instalar</b>Un plugin puede ejecutar scripts, hooks y servidores MCP en tu ordenador. Instala solo de fuentes en las que confíes y revisa el panel de detalles antes de aceptar.</div>
+      <div class="note warn"><b>Lee antes de usar</b>Una skill puede incluir scripts que Claude ejecutará. Usa solo skills de fuentes en las que confíes y léelas antes de activarlas.</div>
     </section>
 
     <!-- 09 · AVANZADO -->
     <section class="block" id="avanzado">
       <header>
-        <p class="eyebrow">Bloque 6 · Avanzado <span>· 20 min</span></p>
+        <p class="eyebrow">Bloque 6 · Avanzado <span>· 15 min</span></p>
         <h2>Nivel avanzado: las piezas y cuándo usar cada una</h2>
-        <p class="goal">CLAUDE.md dice <i>qué saber</i>, las skills dicen <i>cómo hacer</i> una tarea, los hooks garantizan lo que <i>siempre</i> debe pasar, los subagentes trabajan <i>en paralelo y aparte</i> y MCP conecta con <i>servicios externos</i>.</p>
+        <p class="goal">CLAUDE.md dice <i>qué saber</i>, las skills dicen <i>cómo hacer</i> una tarea, los hooks garantizan lo que <i>siempre</i> debe pasar, los subagentes trabajan <i>aparte</i> y los conectores enlazan con <i>servicios externos</i>. Todo se guarda en el repositorio, así que funciona en la nube.</p>
       </header>
       <div class="grid two">
         <div class="card">
           <span class="tag">Subagentes</span>
           <h4>Asistentes especializados con su propio contexto</h4>
-          <p>Archivos en <code>.claude/agents/</code>. Útiles para investigar o revisar sin llenar tu conversación. Úsalos diciendo <code>usa el subagente revisor-ml para revisar mis cambios</code>.</p>
+          <p>Archivos en <code>.claude/agents/</code>. Útiles para investigar o revisar sin llenar tu conversación. Úsalos diciendo <code>usa el subagente revisor-ml para revisar los cambios</code>.</p>
           <div class="code has-label"><span class="label">.claude/agents/revisor-ml.md</span><pre>---
 name: revisor-ml
 description: Revisa código de ML buscando fugas de
@@ -1206,71 +1203,52 @@ Indica archivo, línea y cómo arreglarlo.</pre></div>
         <div class="card">
           <span class="tag">Hooks</span>
           <h4>Acciones automáticas que siempre ocurren</h4>
-          <p>Scripts que Claude Code ejecuta en momentos concretos (antes o después de usar una herramienta, al terminar…). A diferencia de CLAUDE.md, no dependen de que Claude "se acuerde". Puedes pedirle: <code>escribe un hook que formatee los .py después de cada edición</code>. Se ven con <code>/hooks</code>.</p>
+          <p>Comandos que Claude Code ejecuta en momentos concretos: al empezar la sesión, después de editar un archivo… A diferencia de CLAUDE.md, no dependen de que Claude "se acuerde". Este instala las dependencias al empezar cada sesión, en la nube y en cualquier otro sitio:</p>
           <div class="code has-label"><span class="label">.claude/settings.json</span><pre>{
   "hooks": {
-    "PostToolUse": [
+    "SessionStart": [
       {
-        "matcher": "Edit|Write",
         "hooks": [
           { "type": "command",
-            "command": "ruff format --quiet ." }
+            "command": "pip install -q -r requirements.txt" }
         ]
       }
     ]
   }
 }</pre></div>
+          <p>Puedes pedírselo así: <code>escribe un hook que formatee los .py con ruff después de cada edición</code>.</p>
         </div>
         <div class="card">
-          <span class="tag">MCP</span>
-          <h4>Conectar herramientas y datos externos</h4>
-          <p>El Model Context Protocol da a Claude acceso a servicios: bases de datos, Notion, Figma… Para ML, el servidor de Hugging Face permite buscar modelos, datasets y papers.</p>
-          <div class="code"><pre>claude mcp add --transport http huggingface https://huggingface.co/mcp
-<span class="c"># dentro de la sesión: /mcp para autenticarte y ver el estado</span></pre></div>
-          <p>Después: <code>busca en Hugging Face datasets de dígitos manuscritos con licencia abierta y compáralos con load_digits</code>.</p>
+          <span class="tag">Conectores</span>
+          <h4>Servicios externos dentro de la sesión</h4>
+          <p>En el <b>＋</b> del cuadro de mensaje → <b>Conectores</b> activas los que tengas en tu cuenta de Claude (por ejemplo Google Drive o Notion) y Claude puede usarlos en la tarea. Su tráfico pasa por los servidores de Anthropic, así que no hace falta abrir la red del entorno. Se gestionan en <b>Personalización</b>.</p>
         </div>
         <div class="card">
-          <span class="tag">Plugins</span>
-          <h4>Paquetes para compartir tu configuración</h4>
-          <p>Un plugin agrupa skills, subagentes, hooks y servidores MCP en una sola instalación. Tu clase podría tener un marketplace propio en un repo de GitHub y cada estudiante instalarlo con <code>/plugin marketplace add profe/plugins-clase</code>.</p>
+          <span class="tag">Sesiones en paralelo</span>
+          <h4>Varios experimentos a la vez</h4>
+          <p>Cada sesión tiene su máquina y su rama. Abre tres sesiones sobre el mismo repositorio y pide en cada una una variante (<code>32</code>, <code>64</code> y <code>128</code> neuronas). Compara las tablas de resultados y quédate con el mejor PR.</p>
         </div>
         <div class="card">
-          <span class="tag">Modo no interactivo</span>
-          <h4><code>claude -p</code> en scripts y CI</h4>
-          <div class="code"><pre>claude -p "lista los archivos sin tests" --output-format json
-for f in notebooks/*.ipynb; do
-  claude -p "resume $f en 3 líneas" &gt;&gt; resumen.md
-done</pre></div>
-          <p>Con <code>--allowedTools</code> preapruebas herramientas y con <code>--permission-mode dontAsk</code> rechaza el resto.</p>
+          <span class="tag">Auto-fix</span>
+          <h4>Que arregle solo los fallos del PR</h4>
+          <p>Cuando ya hay un pull request, aparece una barra de <b>CI</b> en la sesión. Activa <b>Auto-fix</b> y Claude vigila el PR: si GitHub Actions falla o alguien deja un comentario, investiga y sube el arreglo. Requiere la Claude GitHub App en el repositorio.</p>
         </div>
         <div class="card">
-          <span class="tag">Trabajo en paralelo</span>
-          <h4>Varias sesiones a la vez</h4>
-          <ul>
-            <li><b>git worktrees</b>: carpetas separadas del mismo repo, una sesión en cada una, para que no choquen.</li>
-            <li><code>claude --cloud "tarea"</code> varias veces: cada tarea en su sesión en la nube.</li>
-            <li><code>/batch &lt;instrucción&gt;</code> reparte un cambio grande entre muchos subagentes.</li>
-          </ul>
-        </div>
-        <div class="card">
-          <span class="tag">Objetivos y bucles</span>
-          <h4><code>/goal</code> y <code>/loop</code></h4>
-          <p><code>/goal todos los tests pasan y la precisión en test es ≥ 0.97</code>: Claude sigue trabajando turno tras turno hasta cumplir la condición. <code>/loop 10m comprueba si terminó el entrenamiento</code> repite una tarea mientras la sesión esté abierta. <code>/schedule</code> crea rutinas en la nube.</p>
+          <span class="tag">Estilo Learning</span>
+          <h4>Claude como profesor</h4>
+          <p>Con el estilo <code>Learning</code>, Claude explica sus decisiones y te deja huecos <code>TODO(human)</code> para que escribas tú el código clave. Actívalo para todo el proyecto en <code>.claude/settings.json</code>:</p>
+          <div class="code"><pre>{ "outputStyle": "Learning" }</pre></div>
+          <p>Con <code>Explanatory</code> solo añade explicaciones, sin pedirte código.</p>
         </div>
         <div class="card">
           <span class="tag">Calidad</span>
-          <h4>Revisión, seguridad y verificación</h4>
-          <p><code>/code-review</code> busca errores en tu diff con un subagente de contexto limpio, <code>/security-review</code> busca vulnerabilidades y <code>/verify</code> ejecuta tu app para comprobar que el cambio funciona de verdad, no solo que pasa los tests.</p>
+          <h4>Revisión antes del PR</h4>
+          <p><code>/code-review</code> revisa los cambios de la sesión con un subagente de contexto limpio y devuelve una lista de problemas que puedes pedir que arregle. Úsalo siempre antes de <b>Crear PR</b>.</p>
         </div>
         <div class="card">
-          <span class="tag">Estilos de salida</span>
-          <h4>Claude como profesor</h4>
-          <p><code>/output-style Explanatory</code> añade bloques <b>Insight</b> que explican las decisiones. <code>/output-style Learning</code> además te deja huecos <code>TODO(human)</code> para que escribas tú el código clave. Ideal para aprender mientras construyes.</p>
-        </div>
-        <div class="card">
-          <span class="tag">Puntos de control</span>
-          <h4>Experimenta sin miedo</h4>
-          <p>Cada prompt crea un punto de control. <code>/rewind</code> (o <kbd>Esc</kbd> <kbd>Esc</kbd>) restaura conversación, código o ambos. Solo cubre ediciones hechas por Claude, no sustituye a git: haz commits a menudo.</p>
+          <span class="tag">Rutinas</span>
+          <h4>Tareas programadas</h4>
+          <p>Una rutina lanza una sesión en la nube según un horario o un evento de GitHub. Por ejemplo: cada lunes, reentrenar y abrir un PR si la precisión mejora. Consulta la <a href="https://code.claude.com/docs/en/routines">guía de rutinas</a>.</p>
         </div>
       </div>
       <div class="table-wrap">
@@ -1279,11 +1257,11 @@ done</pre></div>
           <tbody>
             <tr><td>Que sepa los comandos y reglas del proyecto</td><td><code>CLAUDE.md</code></td></tr>
             <tr><td>Un procedimiento repetible (entrenar, desplegar, revisar)</td><td>Skill</td></tr>
-            <tr><td>Que algo ocurra siempre, sin excepción (formatear, bloquear un comando)</td><td>Hook</td></tr>
+            <tr><td>Que algo ocurra siempre, sin excepción</td><td>Hook</td></tr>
             <tr><td>Investigar o revisar sin llenar el contexto</td><td>Subagente</td></tr>
-            <tr><td>Hablar con un servicio externo (Hugging Face, base de datos)</td><td>Servidor MCP</td></tr>
-            <tr><td>Compartir todo lo anterior con tu clase o equipo</td><td>Plugin + marketplace</td></tr>
-            <tr><td>Cambiar cómo responde (más corto, más didáctico)</td><td>Estilo de salida</td></tr>
+            <tr><td>Usar Google Drive, Notion u otro servicio</td><td>Conector</td></tr>
+            <tr><td>Instalar algo en la máquina antes de empezar</td><td>Script de configuración del entorno</td></tr>
+            <tr><td>Que te explique mientras construye</td><td>Estilo <code>Learning</code> o <code>Explanatory</code></td></tr>
           </tbody>
         </table>
       </div>
@@ -1292,9 +1270,9 @@ done</pre></div>
     <!-- 10 · PROYECTO -->
     <section class="block" id="proyecto">
       <header>
-        <p class="eyebrow">Bloque 7 · Proyecto <span>· 40 min</span></p>
+        <p class="eyebrow">Bloque 7 · Proyecto <span>· 50 min</span></p>
         <h2>Tu modelo de machine learning, de cero a producción</h2>
-        <p class="goal">Vas a construir el reconocedor de dígitos de arriba: se entrena en Python con scikit-learn, se exportan los pesos a JSON y la web hace la predicción en el navegador. Sin servidor, así que GitHub Pages lo publica gratis.</p>
+        <p class="goal">Vas a construir el reconocedor de dígitos de arriba: se entrena en Python con scikit-learn, se exportan los pesos a JSON y la web hace la predicción en el navegador. Sin servidor, así que GitHub Pages lo publica gratis. Todo desde la app de Claude.</p>
       </header>
       <div class="grid two">
         <pre class="tree"><span class="c"># Estructura final</span>
@@ -1307,7 +1285,7 @@ reconocedor-digitos/
 ├── requirements.txt
 ├── tests/test_model.py    <span class="c">verificación</span>
 ├── .claude/
-│   ├── settings.json      <span class="c">permisos</span>
+│   ├── settings.json      <span class="c">permisos y hooks</span>
 │   ├── agents/revisor-ml.md
 │   └── skills/
 │       ├── entrenar-modelo/
@@ -1328,13 +1306,27 @@ reconocedor-digitos/
 
       <ol class="steps">
         <li><div>
-          <h4>Fase 0 · Prepara la carpeta</h4>
-          <div class="code"><pre>mkdir reconocedor-digitos &amp;&amp; cd reconocedor-digitos
-git init
-claude --permission-mode plan</pre></div>
+          <h4>Fase 0 · Crea el repositorio vacío en GitHub</h4>
+          <figure>
+            <div class="win">
+              <div class="win-bar"><span class="dots"><i></i><i></i><i></i></span><span class="url">github.com/new</span></div>
+              <div class="page">
+                <h5 style="margin:0;font:700 1rem/1.2 var(--display)">Create a new repository</h5>
+                <div class="ui-box">
+                  <span class="muted" style="font-size:.82rem">Repository name</span>
+                  <span class="ui-input" style="color:var(--ink)">reconocedor-digitos</span>
+                  <div class="row"><span class="ui-radio on">Public</span><span class="ui-radio">Private</span></div>
+                  <div class="row"><span class="ui-radio on">Add a README file</span></div>
+                  <div class="row" style="justify-content:flex-end"><span class="ui-btn go callout-mark">Create repository</span></div>
+                </div>
+              </div>
+            </div>
+            <figcaption><b>Figura 7.</b> Esquema de la página para crear un repositorio. Hazlo <b>público</b> (GitHub Pages es gratis en repositorios públicos) y marca <b>Add a README file</b> para que no esté vacío.</figcaption>
+          </figure>
         </div></li>
         <li><div>
-          <h4>Fase 1 · Que Claude te entreviste y escriba la especificación</h4>
+          <h4>Fase 1 · Nueva sesión en modo Plan: que Claude te entreviste</h4>
+          <p class="muted">En Claude: <b>Nuevo</b> → entorno <b>Default</b> → repositorio <b>reconocedor-digitos</b> → modo <b>Plan</b>.</p>
           <div class="code prompt"><pre>Quiero crear una web que reconozca dígitos escritos a mano: el usuario dibuja un
 número y un modelo entrenado en Python lo adivina en el navegador. Se publicará en
 GitHub Pages, así que no puede haber servidor.
@@ -1346,16 +1338,17 @@ queda fuera y cómo verificaremos cada parte.</pre></div>
           <p class="muted">Contesta a sus preguntas. Revisa <code>SPEC.md</code> y corrige lo que no te convenza: es tu proyecto.</p>
         </div></li>
         <li><div>
-          <h4>Fase 2 · Memoria y permisos del proyecto</h4>
-          <div class="code prompt"><pre>Crea CLAUDE.md con los comandos para instalar, entrenar, testear y servir la web, y
-estas reglas: index.html estático sin librerías, model.json &lt; 1 MB, nunca evaluar con
-datos de entrenamiento, semillas fijas. Crea también .claude/settings.json que permita
-sin preguntar "python train.py" y "python -m pytest" y prohíba leer .env.</pre></div>
+          <h4>Fase 2 · Memoria y ajustes del proyecto</h4>
+          <div class="code prompt"><pre>Crea CLAUDE.md con los comandos para instalar, entrenar y testear, y estas reglas:
+index.html estático sin librerías, model.json menor de 1 MB, nunca evaluar con datos de
+entrenamiento, semillas fijas. Crea también .claude/settings.json con un hook
+SessionStart que instale requirements.txt, y permiso para ejecutar sin preguntar
+"python train.py" y "python -m pytest".</pre></div>
         </div></li>
         <li><div>
           <h4>Fase 3 · Entrenamiento con verificación</h4>
-          <p class="muted">Sal del modo plan con <kbd>Shift</kbd>+<kbd>Tab</kbd>.</p>
-          <div class="code prompt"><pre>Lee @SPEC.md. Implementa train.py con scikit-learn y el dataset load_digits:
+          <p class="muted">Cambia el modo a <b>Aceptar ediciones</b> o <b>Auto</b>.</p>
+          <div class="code prompt"><pre>Sigue SPEC.md. Implementa train.py con scikit-learn y el dataset load_digits:
 - separa train/test 80/20 con stratify y semilla fija ANTES de aumentar datos
 - aumenta solo el train con copias desplazadas 1 píxel a izquierda y derecha
 - MLPClassifier con una capa oculta de 64 neuronas
@@ -1381,9 +1374,9 @@ afecte a la corrección.</pre></div>
 - la predicción con los pesos de model.json; la cuenta debe ser idéntica a forward()
 - barras con la probabilidad de cada dígito y la miniatura 8x8 que ve el modelo
 - diseño adaptado a móvil
-Sírvela con python -m http.server 8000 y comprueba que funciona. Si puedes usar un
-navegador, dibuja un 1 y un 7 y haz una captura.</pre></div>
-          <p class="muted">Ábrela tú también en <code>http://localhost:8000</code> y prueba a dibujar. Si algún dígito falla mucho, pega una captura y pide que lo investigue.</p>
+Verifícalo con Node: extrae predict() y comprueba que da las mismas predicciones que
+Python para 20 imágenes del conjunto de test. Enséñame el resultado.</pre></div>
+          <p class="muted">La web la probarás tú con tus propios dibujos cuando esté publicada (fase 8).</p>
         </div></li>
         <li><div>
           <h4>Fase 6 · Tu skill y un experimento</h4>
@@ -1392,36 +1385,34 @@ reentrene, pase los tests y compare precisión y tamaño antes/después en una t
           <div class="code prompt"><pre>/entrenar-modelo prueba una capa oculta de 128 neuronas</pre></div>
         </div></li>
         <li><div>
-          <h4>Fase 7 · Sube el proyecto a GitHub</h4>
-          <div class="code prompt"><pre>Crea un .gitignore para Python, haz commit de todo con un mensaje descriptivo, crea
-un repositorio público en GitHub llamado reconocedor-digitos con gh y sube main.</pre></div>
+          <h4>Fase 7 · Revisa los cambios y crea el pull request</h4>
+          <p>Abre <b>Cambios</b> en el panel derecho, recorre el diff y comenta lo que quieras cambiar. Cuando esté bien, pulsa <b>Crear PR</b>. En GitHub, revisa el PR y pulsa <b>Merge pull request</b>: tu código ya está en <code>main</code>.</p>
         </div></li>
         <li><div>
-          <h4>Fase 8 · Despliegue automático</h4>
+          <h4>Fase 8 · Despliegue automático en GitHub Pages</h4>
           <div class="code prompt"><pre>Añade .github/workflows/deploy-pages.yml que, en cada push a main, instale las
 dependencias, entrene, pase los tests y publique index.html y model.json en GitHub
-Pages con actions/deploy-pages. Haz commit y push, y dime qué tengo que activar en
-Settings → Pages.</pre></div>
-          <p class="muted">Los detalles de este paso están en el bloque siguiente.</p>
+Pages con actions/deploy-pages. Explícame qué tengo que activar en Settings → Pages.</pre></div>
+          <p class="muted">Crea el PR y fusiónalo. Los pasos en GitHub están en el bloque siguiente.</p>
         </div></li>
         <li><div>
           <h4>Fase 9 · README y entrega</h4>
-          <div class="code prompt"><pre>/goal el README explica qué hace el proyecto, cómo entrenar, testear y desplegar,
-incluye la precisión obtenida y el enlace a la web publicada</pre></div>
+          <div class="code prompt"><pre>Escribe el README: qué hace el proyecto, cómo entrenar, testear y desplegar, la
+precisión obtenida y el enlace a la web publicada en GitHub Pages.</pre></div>
         </div></li>
       </ol>
 
       <h3>Lista de control de tu proyecto</h3>
       <p class="muted">Se guarda en este navegador.</p>
       <ul class="checklist" id="checklist">
-        <li><label><input type="checkbox" id="ck-1"><span>Claude Code instalado y sesión iniciada</span></label></li>
-        <li><label><input type="checkbox" id="ck-2"><span><code>gh auth status</code> muestra mi cuenta de GitHub</span></label></li>
+        <li><label><input type="checkbox" id="ck-1"><span>Sesión iniciada en claude.ai/code o en la pestaña Code de la app</span></label></li>
+        <li><label><input type="checkbox" id="ck-2"><span>GitHub conectado y mi repositorio aparece en el selector</span></label></li>
         <li><label><input type="checkbox" id="ck-3"><span>SPEC.md escrito y revisado por mí</span></label></li>
-        <li><label><input type="checkbox" id="ck-4"><span>CLAUDE.md con comandos y reglas</span></label></li>
-        <li><label><input type="checkbox" id="ck-5"><span><code>python -m pytest -q</code> en verde</span></label></li>
-        <li><label><input type="checkbox" id="ck-6"><span>La web reconoce mis dígitos en local</span></label></li>
+        <li><label><input type="checkbox" id="ck-4"><span>CLAUDE.md y .claude/settings.json creados</span></label></li>
+        <li><label><input type="checkbox" id="ck-5"><span>Los tests pasan (<code>python -m pytest -q</code>)</span></label></li>
+        <li><label><input type="checkbox" id="ck-6"><span>Las predicciones de JavaScript coinciden con las de Python</span></label></li>
         <li><label><input type="checkbox" id="ck-7"><span>Skill <code>/entrenar-modelo</code> creada y probada</span></label></li>
-        <li><label><input type="checkbox" id="ck-8"><span>Repositorio público en GitHub</span></label></li>
+        <li><label><input type="checkbox" id="ck-8"><span>Pull request revisado y fusionado en <code>main</code></span></label></li>
         <li><label><input type="checkbox" id="ck-9"><span>Web publicada en <code>usuario.github.io/reconocedor-digitos</code></span></label></li>
         <li><label><input type="checkbox" id="ck-10"><span>README con precisión y enlace</span></label></li>
       </ul>
@@ -1477,7 +1468,7 @@ incluye la precisión obtenida y el enlace a la web publicada</pre></div>
                     </div>
                   </div>
                 </div>
-                <figcaption><b>Figura 10.</b> En <b>Source</b> elige <b>Deploy from a branch</b>, después la rama <b>main</b> y la carpeta <b>/ (root)</b>, y pulsa <b>Save</b>.</figcaption>
+                <figcaption><b>Figura 8.</b> En <b>Source</b> elige <b>Deploy from a branch</b>, después la rama <b>main</b> y la carpeta <b>/ (root)</b>, y pulsa <b>Save</b>.</figcaption>
               </figure>
             </div></li>
             <li><div><h4>Espera uno o dos minutos y abre tu web</h4>
@@ -1548,7 +1539,7 @@ jobs:
                     </div>
                   </div>
                 </div>
-                <figcaption><b>Figura 11.</b> Si el job <b>build</b> sale en rojo, ábrelo, copia el error y pégaselo a Claude: <code>el workflow de Pages falla con este error: […] arréglalo</code>.</figcaption>
+                <figcaption><b>Figura 9.</b> Si el job <b>build</b> sale en rojo, ábrelo, copia el error y pégaselo a Claude en la misma sesión: <code>el workflow de Pages falla con este error: […] arréglalo</code>. O activa <b>Auto-fix</b> en la barra de CI.</figcaption>
               </figure>
             </div></li>
           </ol>
@@ -1562,7 +1553,6 @@ jobs:
           <tbody>
             <tr><td>404 al abrir la web</td><td>Aún se está publicando, o no hay <code>index.html</code> en la carpeta elegida</td><td>Espera 2 minutos; revisa rama y carpeta en Settings → Pages</td></tr>
             <tr><td>La web carga pero no predice</td><td><code>model.json</code> no está subido o la ruta no coincide (en Pages importan las mayúsculas)</td><td>Usa rutas relativas (<code>fetch("model.json")</code>) y comprueba que está en el repo</td></tr>
-            <tr><td>Funciona en GitHub pero no al hacer doble clic</td><td>El navegador bloquea <code>fetch</code> con <code>file://</code></td><td>Sirve en local con <code>python -m http.server</code></td></tr>
             <tr><td>El workflow falla en <code>configure-pages</code></td><td>Pages no está activado con fuente GitHub Actions</td><td>Settings → Pages → Source: GitHub Actions</td></tr>
             <tr><td>El workflow falla en <code>pytest</code></td><td>El modelo nuevo no llega al umbral</td><td>Es justo para lo que sirve: arregla el modelo, no el test</td></tr>
           </tbody>
@@ -1577,14 +1567,14 @@ jobs:
         <h2>Seguridad y buenas prácticas</h2>
       </header>
       <div class="grid two">
-        <div class="card"><h4>Secretos fuera del código</h4><p>Claves y tokens en <code>.env</code> (en <code>.gitignore</code>) o en los Secrets de GitHub. Prohíbe leerlos con una regla <code>deny</code> en <code>.claude/settings.json</code>: <code>"Read(./.env)"</code>.</p></div>
-        <div class="card"><h4>Revisa antes de aceptar</h4><p>Lee el plan, usa <code>/diff</code> antes de cada commit y pide explicaciones de lo que no entiendas. Tú eres responsable del código que entregas.</p></div>
-        <div class="card"><h4>Commits pequeños y frecuentes</h4><p>Los puntos de control de Claude solo cubren sus ediciones. Git es tu red de seguridad real.</p></div>
-        <div class="card"><h4>Permisos con criterio</h4><p>Modo plan para lo desconocido, <code>auto</code> para tareas largas rutinarias, <code>bypassPermissions</code> nunca fuera de un contenedor aislado.</p></div>
-        <div class="card"><h4>Contenido externo, con cuidado</h4><p>Webs, issues o archivos descargados pueden contener instrucciones maliciosas. Instala plugins y servidores MCP solo de fuentes de confianza.</p></div>
+        <div class="card"><h4>Claves fuera del código y de las variables</h4><p>Nunca pongas contraseñas ni claves de API en el código ni en las variables del entorno: quien use el entorno puede leerlas. Para GitHub Actions usa los <b>Secrets</b> del repositorio.</p></div>
+        <div class="card"><h4>Red en Trusted</h4><p>Deja el acceso a red del entorno en <b>Trusted</b>. Pasa a <b>Full</b> o <b>Custom</b> solo si una tarea concreta lo necesita, y vuelve después.</p></div>
+        <div class="card"><h4>Revisa antes del PR</h4><p>Lee el plan, recorre <b>Cambios</b> y pide explicaciones de lo que no entiendas. Tú eres responsable del código que entregas.</p></div>
+        <div class="card"><h4>Main está protegido por ti</h4><p>Claude trabaja en ramas <code>claude/…</code>. Nada llega a <code>main</code> hasta que tú fusionas el pull request en GitHub.</p></div>
+        <div class="card"><h4>Contenido externo, con cuidado</h4><p>Webs, issues o archivos descargados pueden contener instrucciones maliciosas. Activa skills y conectores solo de fuentes de confianza.</p></div>
         <div class="card"><h4>Integridad académica</h4><p>Pregunta a tu profesor qué uso está permitido. Una buena regla: si no sabes explicar una línea, no la entregues. Usa el estilo <code>Learning</code> para escribir tú las partes clave.</p></div>
-        <div class="card"><h4>Gestiona el contexto</h4><p><code>/clear</code> entre tareas distintas, <code>/compact</code> en sesiones largas, <code>/context</code> para ver qué ocupa espacio. Un contexto limpio da mejores respuestas.</p></div>
-        <div class="card"><h4>Controla el consumo</h4><p><code>/usage</code> muestra coste y límites del plan. Prompts claros y CLAUDE.md breve ahorran turnos y tokens.</p></div>
+        <div class="card"><h4>Cuida el contexto</h4><p>Mira el indicador de <b>Contexto</b>. Una sesión nueva por tarea; <code>/compact</code> si una sesión larga se llena. Un contexto limpio da mejores respuestas.</p></div>
+        <div class="card"><h4>Controla el uso</h4><p>El anillo junto al modelo muestra cuánto llevas del plan. Usa Haiku o Sonnet para lo sencillo y reserva Opus o Fable con esfuerzo alto para lo difícil.</p></div>
       </div>
     </section>
 
@@ -1595,48 +1585,44 @@ jobs:
         <h2>Chuleta</h2>
       </header>
       <div class="cheat">
-        <div class="card"><h4>Teclas</h4><dl>
+        <div class="card"><h4>Interfaz</h4><dl>
+          <dt>Nuevo</dt><dd>sesión nueva</dd>
+          <dt>Personalización</dt><dd>skills y conectores</dd>
+          <dt>Entorno</dt><dd>máquina, repo y rama</dd>
+          <dt>Contexto</dt><dd>memoria usada</dd>
+          <dt>Cambios</dt><dd>diff y Crear PR</dd>
+          <dt>＋</dt><dd>adjuntar y conectores</dd>
+        </dl></div>
+        <div class="card"><h4>Atajos de la app</h4><dl>
           <dt><kbd>Esc</kbd></dt><dd>parar</dd>
-          <dt><kbd>Esc</kbd><kbd>Esc</kbd></dt><dd>rebobinar</dd>
-          <dt><kbd>⇧Tab</kbd></dt><dd>modo de permisos</dd>
-          <dt><kbd>⇧Enter</kbd></dt><dd>nueva línea</dd>
-          <dt><kbd>Ctrl</kbd><kbd>G</kbd></dt><dd>abrir en editor</dd>
-          <dt><kbd>Ctrl</kbd><kbd>V</kbd></dt><dd>pegar imagen</dd>
-          <dt><kbd>Ctrl</kbd><kbd>O</kbd></dt><dd>ver detalle</dd>
-          <dt><kbd>Ctrl</kbd><kbd>B</kbd></dt><dd>segundo plano</dd>
+          <dt><kbd>Ctrl</kbd><kbd>N</kbd></dt><dd>nueva sesión</dd>
+          <dt><kbd>Ctrl</kbd><kbd>/</kbd></dt><dd>ver atajos</dd>
+          <dt><kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>M</kbd></dt><dd>modo</dd>
+          <dt><kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>I</kbd></dt><dd>modelo</dd>
+          <dt><kbd>Ctrl</kbd><kbd>⇧</kbd><kbd>E</kbd></dt><dd>esfuerzo</dd>
         </dl></div>
-        <div class="card"><h4>Prefijos</h4><dl>
-          <dt><code>/</code></dt><dd>comandos y skills</dd>
-          <dt><code>@</code></dt><dd>mencionar archivo</dd>
-          <dt><code>!</code></dt><dd>ejecutar en shell</dd>
-          <dt><code>?</code></dt><dd>ayuda de atajos</dd>
-        </dl></div>
-        <div class="card"><h4>Comandos top</h4><dl>
+        <div class="card"><h4>Comandos</h4><dl>
           <dt><code>/init</code></dt><dd>crear CLAUDE.md</dd>
-          <dt><code>/clear</code></dt><dd>empezar de cero</dd>
+          <dt><code>/model</code></dt><dd>cambiar modelo</dd>
+          <dt><code>/effort</code></dt><dd>cambiar esfuerzo</dd>
+          <dt><code>/context</code></dt><dd>ver contexto</dd>
           <dt><code>/compact</code></dt><dd>resumir</dd>
-          <dt><code>/plan</code></dt><dd>modo plan</dd>
-          <dt><code>/diff</code></dt><dd>ver cambios</dd>
           <dt><code>/code-review</code></dt><dd>revisar</dd>
-          <dt><code>/skills</code></dt><dd>ver skills</dd>
-          <dt><code>/plugin</code></dt><dd>buscar e instalar</dd>
         </dl></div>
-        <div class="card"><h4>Archivos</h4><dl>
+        <div class="card"><h4>Modelos</h4><dl>
+          <dt>Haiku 5.5</dt><dd>rápido, tareas simples</dd>
+          <dt>Sonnet 5.5</dt><dd>día a día</dd>
+          <dt>Opus 5.5</dt><dd>razonamiento, por defecto</dd>
+          <dt>Fable 5.1</dt><dd>lo más difícil</dd>
+        </dl></div>
+        <div class="card"><h4>Archivos del repo</h4><dl>
           <dt><code>CLAUDE.md</code></dt><dd>memoria</dd>
           <dt><code>.claude/skills/</code></dt><dd>skills</dd>
           <dt><code>.claude/agents/</code></dt><dd>subagentes</dd>
-          <dt><code>.claude/settings.json</code></dt><dd>permisos y hooks</dd>
-          <dt><code>.mcp.json</code></dt><dd>servidores MCP del proyecto</dd>
-        </dl></div>
-        <div class="card"><h4>Terminal</h4><dl>
-          <dt><code>claude -c</code></dt><dd>continuar</dd>
-          <dt><code>claude -r</code></dt><dd>elegir sesión</dd>
-          <dt><code>claude -p</code></dt><dd>no interactivo</dd>
-          <dt><code>--cloud</code></dt><dd>tarea en la nube</dd>
-          <dt><code>--teleport</code></dt><dd>traer de la nube</dd>
+          <dt><code>.claude/settings.json</code></dt><dd>permisos, hooks, estilo</dd>
         </dl></div>
         <div class="card"><h4>Prompt ideal</h4><dl>
-          <dt>1</dt><dd>contexto + @archivos</dd>
+          <dt>1</dt><dd>contexto + archivos</dd>
           <dt>2</dt><dd>un objetivo concreto</dd>
           <dt>3</dt><dd>restricciones</dd>
           <dt>4</dt><dd>cómo verificar</dd>
@@ -1664,28 +1650,28 @@ jobs:
         <h2>Recursos</h2>
       </header>
       <div class="grid two">
-        <div class="card"><h4>Documentación oficial</h4><ul>
-          <li><a href="https://code.claude.com/docs/en/overview">Introducción a Claude Code</a></li>
-          <li><a href="https://code.claude.com/docs/en/quickstart">Guía de inicio rápido</a></li>
+        <div class="card"><h4>Empezar en la nube</h4><ul>
+          <li><a href="https://code.claude.com/docs/en/web-quickstart">Primera sesión en claude.ai/code</a></li>
+          <li><a href="https://code.claude.com/docs/en/claude-code-on-the-web">Claude Code en la nube</a></li>
+          <li><a href="https://code.claude.com/docs/en/cloud-environments">Configurar entornos</a></li>
+          <li><a href="https://code.claude.com/docs/en/desktop">App de escritorio</a></li>
+        </ul></div>
+        <div class="card"><h4>Trabajar mejor</h4><ul>
           <li><a href="https://code.claude.com/docs/en/best-practices">Buenas prácticas</a></li>
-          <li><a href="https://code.claude.com/docs/en/interactive-mode">Atajos de teclado</a> y <a href="https://code.claude.com/docs/en/commands">comandos</a></li>
+          <li><a href="https://code.claude.com/docs/en/model-config">Modelos y nivel de esfuerzo</a></li>
+          <li><a href="https://code.claude.com/docs/en/permission-modes">Modos de permiso</a></li>
+          <li><a href="https://code.claude.com/docs/en/memory">CLAUDE.md y memoria</a></li>
         </ul></div>
         <div class="card"><h4>Extender Claude Code</h4><ul>
-          <li><a href="https://code.claude.com/docs/en/skills">Skills</a> y <a href="https://code.claude.com/docs/en/discover-plugins">plugins</a></li>
-          <li><a href="https://code.claude.com/docs/en/memory">CLAUDE.md y memoria</a></li>
-          <li><a href="https://code.claude.com/docs/en/sub-agents">Subagentes</a>, <a href="https://code.claude.com/docs/en/hooks-guide">hooks</a> y <a href="https://code.claude.com/docs/en/mcp">MCP</a></li>
-          <li><a href="https://github.com/anthropics/skills">Repositorio anthropics/skills</a></li>
+          <li><a href="https://code.claude.com/docs/en/skills">Skills</a> y <a href="https://github.com/anthropics/skills">repositorio anthropics/skills</a></li>
+          <li><a href="https://code.claude.com/docs/en/sub-agents">Subagentes</a></li>
+          <li><a href="https://code.claude.com/docs/en/hooks-guide">Hooks</a></li>
+          <li><a href="https://code.claude.com/docs/en/output-styles">Estilos de salida (Learning)</a></li>
         </ul></div>
-        <div class="card"><h4>GitHub</h4><ul>
-          <li><a href="https://code.claude.com/docs/en/github-actions">Claude Code GitHub Actions</a></li>
-          <li><a href="https://code.claude.com/docs/en/claude-code-on-the-web">Claude Code en la nube</a></li>
+        <div class="card"><h4>GitHub y machine learning</h4><ul>
           <li><a href="https://docs.github.com/pages">Documentación de GitHub Pages</a></li>
           <li><a href="https://education.github.com/pack">GitHub Student Developer Pack</a></li>
-        </ul></div>
-        <div class="card"><h4>Machine learning</h4><ul>
           <li><a href="https://scikit-learn.org/stable/datasets/toy_dataset.html">Datasets de ejemplo de scikit-learn</a></li>
-          <li><a href="https://scikit-learn.org/stable/modules/neural_networks_supervised.html">Redes neuronales en scikit-learn</a></li>
-          <li><a href="https://huggingface.co/docs/hub/en/hf-mcp-server">Servidor MCP de Hugging Face</a></li>
           <li><a href="proyecto-ml/index.html">Demo y código del proyecto de ejemplo</a></li>
         </ul></div>
       </div>
@@ -1865,7 +1851,7 @@ jobs:
     const all = parts.join(" ");
     const ok = {
       ctx: v("ctx").split(/\s+/).filter(Boolean).length >= 5,
-      at: /@[\w./-]+/.test(all),
+      at: /\b[\w./-]+\.(py|html|json|md|txt|yml|yaml|js|csv)\b/i.test(all),
       goal: v("goal").split(/\s+/).filter(Boolean).length > 6,
       rules: v("rules").length > 10,
       check: /(test|pytest|ejecuta|comprueba|verifica|captura|precisi|build|run)/i.test(v("check")),
@@ -1890,23 +1876,29 @@ jobs:
   /* ---------- Test ---------- */
   const QUIZ = [
     { q: "Claude va por mal camino a mitad de una tarea. ¿Qué haces primero?",
-      o: ["Pulsar Esc para interrumpirlo y redirigirlo", "Cerrar la terminal", "Esperar a que termine y borrar todo", "Pulsar Ctrl+D"],
-      a: 0, why: "Esc lo para conservando lo hecho, y puedes corregir el rumbo al momento. Con Esc Esc además puedes rebobinar." },
-    { q: "¿Qué atajo cambia entre Manual, aceptar ediciones, plan y auto?",
-      o: ["Ctrl+P", "Shift+Tab", "Alt+M en macOS", "Tab"],
-      a: 1, why: "Shift+Tab recorre los modos de permiso. En Windows, si no funciona, prueba Alt+M." },
-    { q: "Quieres que todo tu equipo tenga una skill al clonar el repo. ¿Dónde la guardas?",
-      o: ["~/.claude/skills/nombre/SKILL.md", ".claude/skills/nombre/SKILL.md", "En el README", "En CLAUDE.local.md"],
-      a: 1, why: "Las skills de proyecto viven en .claude/skills/ y se suben a git. La ruta de ~ es solo para ti." },
+      o: ["Pulsar Esc (o el botón de parar) y redirigirlo", "Cerrar la pestaña del navegador", "Esperar a que termine y borrar todo", "Crear otro repositorio"],
+      a: 0, why: "Esc o el botón de parar lo detienen conservando lo hecho, y le corriges el rumbo al momento. Cerrar la pestaña no para la sesión: sigue en la nube." },
+    { q: "¿Qué modos de permiso puedes elegir en una sesión en la nube?",
+      o: ["Solo Manual", "Aceptar ediciones, Plan y Auto", "Bypass permissions", "Ninguno, siempre pregunta"],
+      a: 1, why: "En la nube están Aceptar ediciones, Plan y Auto. Plan es el ideal para empezar un proyecto." },
+    { q: "Quieres que scikit-learn esté instalado nada más empezar cada sesión. ¿Dónde lo pones?",
+      o: ["En el README", "En el script de configuración del entorno (o en un hook SessionStart)", "En las variables de entorno", "En el nombre del repositorio"],
+      a: 1, why: "El script de configuración prepara la máquina antes de que Claude empiece y se guarda en caché. Un hook SessionStart en .claude/settings.json también sirve y viaja con el repositorio." },
+    { q: "¿Qué modelo usarías para una pregunta rápida y sencilla, gastando poco uso del plan?",
+      o: ["Fable 5.1 con esfuerzo máximo", "Opus 5.5 con esfuerzo alto", "Haiku 5.5", "Da igual, todos gastan lo mismo"],
+      a: 2, why: "Haiku es el más rápido y ligero. Reserva Opus o Fable, y los esfuerzos altos, para los problemas difíciles." },
+    { q: "Quieres que todo tu equipo tenga una skill en el proyecto. ¿Dónde la guardas?",
+      o: ["En las variables del entorno", ".claude/skills/nombre/SKILL.md en el repositorio", "En el README", "En un comentario de un issue"],
+      a: 1, why: "Las skills de proyecto viven en .claude/skills/ del repositorio, así que cualquier sesión sobre ese repo las tiene. Las de tu cuenta van en Personalización." },
     { q: "¿Qué parte de una skill está siempre cargada en el contexto?",
       o: ["Todo el SKILL.md", "Los scripts de apoyo", "El nombre y la descripción", "Nada hasta que la invocas"],
       a: 2, why: "Solo name y description están siempre presentes; por eso la descripción debe decir cuándo usarla. El resto se carga al usarla." },
     { q: "¿Cuál de estos prompts dará mejor resultado?",
-      o: ["arregla los tests", "mejora el modelo", "En @train.py la precisión bajó a 0.88 tras mi último commit. Encuentra la causa, arréglala sin tocar el reparto train/test y ejecuta pytest hasta que pase.", "haz que funcione todo bien"],
-      a: 2, why: "Da contexto (@archivo, qué cambió), restricciones y una verificación que Claude puede ejecutar." },
-    { q: "Quieres que el código se formatee SIEMPRE tras cada edición, sin excepción. ¿Qué usas?",
-      o: ["Una línea en CLAUDE.md", "Un hook PostToolUse", "Un estilo de salida", "Un prompt muy enfático"],
-      a: 1, why: "CLAUDE.md es una instrucción que Claude intenta seguir; un hook lo ejecuta Claude Code siempre, de forma determinista." },
+      o: ["arregla los tests", "mejora el modelo", "En train.py la precisión bajó a 0.88 tras mi último cambio. Encuentra la causa, arréglala sin tocar el reparto train/test y ejecuta pytest hasta que pase.", "haz que funcione todo bien"],
+      a: 2, why: "Da contexto (archivo y qué cambió), restricciones y una verificación que Claude puede ejecutar." },
+    { q: "¿Qué tienes que hacer para que los cambios de Claude lleguen a tu rama main?",
+      o: ["Nada, Claude escribe directamente en main", "Revisar en Cambios, pulsar Crear PR y fusionar el pull request en GitHub", "Descargar los archivos y subirlos a mano", "Reiniciar el entorno"],
+      a: 1, why: "Claude trabaja en una rama claude/…. Nada llega a main hasta que tú fusionas el pull request." },
     { q: "Tu web en GitHub Pages carga pero no predice nada. ¿Causa más probable?",
       o: ["GitHub Pages no permite JavaScript", "model.json no está subido o la ruta no coincide", "El modelo es demasiado preciso", "Falta un servidor de Python"],
       a: 1, why: "Pages sirve JS sin problema. Revisa que model.json esté en el repo y que la ruta relativa y las mayúsculas coincidan." }
